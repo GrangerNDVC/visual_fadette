@@ -1,0 +1,538 @@
+{
+ "note": "Echelle : pour afficher un personnage a la bonne taille, multiplier ses pixels par (pixels_ecran_par_cm * cm_per_px). Adulte de reference = 172 cm. figure_height_px = tete/chapeau aux pieds, sans canne ni plume. Valeurs en cm approximatives, a ajuster.",
+ "ref_adult_cm": 172,
+ "sprites": {
+  "cheval_pie": {
+   "file": "sprites/cheval/cheval_pie.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 91,
+   "foot_y": 1215,
+   "figure_height_px": 1125,
+   "center_x": 443,
+   "full_bbox": [
+    141,
+    69,
+    754,
+    1216
+   ],
+   "real_height_cm": 185,
+   "cm_per_px": 0.1644
+  },
+  "fadette_14_guenilles": {
+   "file": "sprites/fadette/fadette_14_guenilles.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 89,
+   "foot_y": 1212,
+   "figure_height_px": 1124,
+   "center_x": 415,
+   "full_bbox": [
+    211,
+    87,
+    621,
+    1216
+   ],
+   "real_height_cm": 148,
+   "cm_per_px": 0.1317
+  },
+  "landry_14_priche": {
+   "file": "sprites/landry/landry_14_priche.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 93,
+   "foot_y": 1234,
+   "figure_height_px": 1142,
+   "center_x": 397,
+   "full_bbox": [
+    152,
+    92,
+    613,
+    1235
+   ],
+   "real_height_cm": 160,
+   "cm_per_px": 0.1401
+  },
+  "landry_15_fete": {
+   "file": "sprites/landry/landry_15_fete.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 93,
+   "foot_y": 1236,
+   "figure_height_px": 1144,
+   "center_x": 397,
+   "full_bbox": [
+    160,
+    92,
+    632,
+    1237
+   ],
+   "real_height_cm": 163,
+   "cm_per_px": 0.1425
+  },
+  "landry_18_face": {
+   "file": "sprites/landry/landry_18_face.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 89,
+   "foot_y": 1236,
+   "figure_height_px": 1148,
+   "center_x": 436,
+   "full_bbox": [
+    241,
+    85,
+    631,
+    1237
+   ],
+   "real_height_cm": 172,
+   "cm_per_px": 0.1498
+  },
+  "landry_18_travail": {
+   "file": "sprites/landry/landry_18_travail.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 88,
+   "foot_y": 1237,
+   "figure_height_px": 1150,
+   "center_x": 376,
+   "full_bbox": [
+    118,
+    84,
+    631,
+    1237
+   ],
+   "real_height_cm": 172,
+   "cm_per_px": 0.1496
+  },
+  "landry_19_noces": {
+   "file": "sprites/landry/landry_19_noces.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 91,
+   "foot_y": 1238,
+   "figure_height_px": 1148,
+   "center_x": 441,
+   "full_bbox": [
+    264,
+    89,
+    616,
+    1239
+   ],
+   "real_height_cm": 172,
+   "cm_per_px": 0.1498
+  },
+  "landry_8_enfance": {
+   "file": "sprites/landry/landry_8_enfance.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 69,
+   "foot_y": 1226,
+   "figure_height_px": 1158,
+   "center_x": 433,
+   "full_bbox": [
+    257,
+    63,
+    609,
+    1226
+   ],
+   "real_height_cm": 125,
+   "cm_per_px": 0.1079
+  },
+  "madelon_16_bergere": {
+   "file": "sprites/madelon/madelon_16_bergere.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 111,
+   "foot_y": 1201,
+   "figure_height_px": 1091,
+   "center_x": 418,
+   "full_bbox": [
+    140,
+    111,
+    640,
+    1201
+   ],
+   "real_height_cm": 160,
+   "cm_per_px": 0.1467
+  },
+  "madelon_16_fete": {
+   "file": "sprites/madelon/madelon_16_fete.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 141,
+   "foot_y": 1199,
+   "figure_height_px": 1059,
+   "center_x": 446,
+   "full_bbox": [
+    246,
+    140,
+    649,
+    1201
+   ],
+   "real_height_cm": 160,
+   "cm_per_px": 0.1511
+  },
+  "mercier_adulte": {
+   "file": "sprites/mercier/mercier_adulte.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 130,
+   "foot_y": 1236,
+   "figure_height_px": 1107,
+   "center_x": 461,
+   "full_bbox": [
+    194,
+    129,
+    732,
+    1236
+   ],
+   "real_height_cm": 170,
+   "cm_per_px": 0.1536
+  },
+  "mere_barbeau_50": {
+   "file": "sprites/mere_barbeau/mere_barbeau_50.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 108,
+   "foot_y": 1234,
+   "figure_height_px": 1127,
+   "center_x": 453,
+   "full_bbox": [
+    257,
+    106,
+    649,
+    1235
+   ],
+   "real_height_cm": 158,
+   "cm_per_px": 0.1402
+  },
+  "mere_fadet_70": {
+   "file": "sprites/mere_fadet/mere_fadet_70.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 92,
+   "foot_y": 1234,
+   "figure_height_px": 1143,
+   "center_x": 416,
+   "full_bbox": [
+    146,
+    90,
+    683,
+    1235
+   ],
+   "real_height_cm": 148,
+   "cm_per_px": 0.1295
+  },
+  "mere_sagette_70": {
+   "file": "sprites/mere_sagette/mere_sagette_70.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 112,
+   "foot_y": 1235,
+   "figure_height_px": 1124,
+   "center_x": 448,
+   "full_bbox": [
+    248,
+    110,
+    649,
+    1236
+   ],
+   "real_height_cm": 150,
+   "cm_per_px": 0.1335
+  },
+  "nanette_10": {
+   "file": "sprites/nanette/nanette_10.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 111,
+   "foot_y": 1235,
+   "figure_height_px": 1125,
+   "center_x": 442,
+   "full_bbox": [
+    246,
+    109,
+    640,
+    1236
+   ],
+   "real_height_cm": 130,
+   "cm_per_px": 0.1156
+  },
+  "nanette_16": {
+   "file": "sprites/nanette/nanette_16.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 111,
+   "foot_y": 1236,
+   "figure_height_px": 1126,
+   "center_x": 447,
+   "full_bbox": [
+    247,
+    110,
+    647,
+    1236
+   ],
+   "real_height_cm": 158,
+   "cm_per_px": 0.1403
+  },
+  "pere_barbeau_55": {
+   "file": "sprites/pere_barbeau/pere_barbeau_55.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 96,
+   "foot_y": 1234,
+   "figure_height_px": 1139,
+   "center_x": 441,
+   "full_bbox": [
+    243,
+    95,
+    638,
+    1235
+   ],
+   "real_height_cm": 172,
+   "cm_per_px": 0.151
+  },
+  "pere_caillaud_55": {
+   "file": "sprites/pere_caillaud/pere_caillaud_55.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 94,
+   "foot_y": 1235,
+   "figure_height_px": 1142,
+   "center_x": 416,
+   "full_bbox": [
+    162,
+    92,
+    669,
+    1235
+   ],
+   "real_height_cm": 172,
+   "cm_per_px": 0.1506
+  },
+  "sauteriot_10_curieux": {
+   "file": "sprites/sauteriot/sauteriot_10_curieux.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 112,
+   "foot_y": 1192,
+   "figure_height_px": 1081,
+   "center_x": 458,
+   "full_bbox": [
+    281,
+    106,
+    633,
+    1196
+   ],
+   "real_height_cm": 126,
+   "cm_per_px": 0.1166
+  },
+  "sauteriot_10_hostile": {
+   "file": "sprites/sauteriot/sauteriot_10_hostile.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 112,
+   "foot_y": 1192,
+   "figure_height_px": 1081,
+   "center_x": 411,
+   "full_bbox": [
+    196,
+    106,
+    633,
+    1196
+   ],
+   "real_height_cm": 126,
+   "cm_per_px": 0.1166
+  },
+  "sauteriot_12_allie": {
+   "file": "sprites/sauteriot/sauteriot_12_allie.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 112,
+   "foot_y": 1210,
+   "figure_height_px": 1099,
+   "center_x": 412,
+   "full_bbox": [
+    196,
+    106,
+    633,
+    1211
+   ],
+   "real_height_cm": 134,
+   "cm_per_px": 0.1219
+  },
+  "sauteriot_15_instruit": {
+   "file": "sprites/sauteriot/sauteriot_15_instruit.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 112,
+   "foot_y": 1210,
+   "figure_height_px": 1099,
+   "center_x": 417,
+   "full_bbox": [
+    196,
+    107,
+    638,
+    1211
+   ],
+   "real_height_cm": 150,
+   "cm_per_px": 0.1365
+  },
+  "sylvinet_14_triste": {
+   "file": "sprites/sylvinet/sylvinet_14_triste.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 111,
+   "foot_y": 1234,
+   "figure_height_px": 1124,
+   "center_x": 429,
+   "full_bbox": [
+    261,
+    105,
+    597,
+    1235
+   ],
+   "real_height_cm": 158,
+   "cm_per_px": 0.1406
+  },
+  "sylvinet_15_jaloux": {
+   "file": "sprites/sylvinet/sylvinet_15_jaloux.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 110,
+   "foot_y": 1236,
+   "figure_height_px": 1127,
+   "center_x": 420,
+   "full_bbox": [
+    261,
+    105,
+    582,
+    1236
+   ],
+   "real_height_cm": 162,
+   "cm_per_px": 0.1437
+  },
+  "sylvinet_18_convalescent": {
+   "file": "sprites/sylvinet/sylvinet_18_convalescent.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 72,
+   "foot_y": 1235,
+   "figure_height_px": 1164,
+   "center_x": 443,
+   "full_bbox": [
+    269,
+    71,
+    621,
+    1235
+   ],
+   "real_height_cm": 170,
+   "cm_per_px": 0.146
+  },
+  "sylvinet_18_fievre": {
+   "file": "sprites/sylvinet/sylvinet_18_fievre.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 71,
+   "foot_y": 1223,
+   "figure_height_px": 1153,
+   "center_x": 450,
+   "full_bbox": [
+    234,
+    63,
+    666,
+    1228
+   ],
+   "real_height_cm": 168,
+   "cm_per_px": 0.1457
+  },
+  "sylvinet_20_soldat": {
+   "file": "sprites/sylvinet/sylvinet_20_soldat.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 73,
+   "foot_y": 1236,
+   "figure_height_px": 1164,
+   "center_x": 439,
+   "full_bbox": [
+    227,
+    70,
+    846,
+    1237
+   ],
+   "real_height_cm": 170,
+   "cm_per_px": 0.146
+  },
+  "sylvinet_27_capitaine": {
+   "file": "sprites/sylvinet/sylvinet_27_capitaine.png",
+   "canvas": [
+    848,
+    1264
+   ],
+   "figure_top_y": 139,
+   "foot_y": 1236,
+   "figure_height_px": 1098,
+   "center_x": 430,
+   "full_bbox": [
+    254,
+    138,
+    607,
+    1237
+   ],
+   "real_height_cm": 170,
+   "cm_per_px": 0.1548
+  }
+ }
+}
