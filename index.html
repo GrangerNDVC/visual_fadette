@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La Petite Fadette – Lire et comprendre</title>
+<style>
+:root{--bg:#f4ecd8;--ink:#2b2118;--acc:#8a4b2a;--ok:#2f7d4f;--ko:#b3402f;--res:#e3eef7}
+*{box-sizing:border-box}body{margin:0;background:#3b2f25;font-family:Georgia,serif;color:var(--ink)}
+#app{max-width:820px;margin:0 auto;min-height:100vh;background:var(--bg);display:flex;flex-direction:column}
+header{padding:8px 14px;background:var(--acc);color:#fff;display:flex;justify-content:space-between;font-size:.9rem}
+#stage{height:0;position:relative;background:linear-gradient(#cfe0c3,#a9c08f);overflow:hidden;transition:height .3s}
+#stage.on{height:260px}#stage img{position:absolute;bottom:0;height:250px}
+#stage .left{left:10%}#stage .right{right:10%}
+#panel{flex:1;padding:16px}
+.extrait{background:#fffaf0;border-left:5px solid var(--acc);padding:12px 14px;margin:0 0 14px;font-size:1.1rem;line-height:1.6;max-height:34vh;overflow:auto}
+.extrait small,.resume small{display:block;color:var(--acc);font-style:italic;margin-bottom:6px;font-size:.8rem}
+.resume{background:var(--res);border:2px dashed #5b8bb0;border-radius:10px;padding:12px 14px;font-family:Arial,sans-serif;font-size:1.05rem;line-height:1.5}
+.resume small{font-style:normal;font-weight:bold;color:#2d5f86;text-transform:uppercase;letter-spacing:.05em}
+.comp{font:bold .75rem Arial;color:var(--acc);text-transform:uppercase;letter-spacing:.06em}
+h2{font-size:1.2rem;margin:4px 0 12px}
+button,.opt{font:inherit;cursor:pointer}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px;border:2px solid #c9b48f;border-radius:10px;background:#fff}
+.opt:hover:not(:disabled){border-color:var(--acc)}.opt.bad{background:#f6d9d3;border-color:var(--ko)}.opt.good{background:#d7efdf;border-color:var(--ok)}
+.imgs{display:flex;gap:12px}.imgs .opt{text-align:center;padding:6px}.face{height:200px;overflow:hidden}.face img{width:100%}.flip{transform:scaleX(-1)}
+.seg{cursor:pointer;padding:2px 1px;border-radius:4px}.seg:hover{background:#f3dc9d}.seg.bad{background:#f6d9d3}.seg.good{background:#d7efdf}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:10px 18px;margin:10px 8px 0 0}.btn.alt{background:#fff;color:var(--acc);border:2px solid var(--acc)}
+input[type=text]{font:inherit;padding:10px;border:2px solid #c9b48f;border-radius:8px;width:60%}
+.fb{margin-top:10px;padding:10px;border-radius:8px;font-family:Arial,sans-serif}.fb.bad{background:#f6d9d3}.fb.good{background:#d7efdf}.hint{background:#fff3c4;margin-top:8px;padding:8px 10px;border-radius:8px;font-family:Arial,sans-serif}
+.bar{height:8px;background:#e3d6b8;border-radius:4px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--ok)}
+</style></head><body><div id="app">
+<header><span id="ttl">La Petite Fadette – Lire et comprendre</span><span id="prog"></span></header>
+<div id="stage"></div><main id="panel"></main></div>
+<script src="data/episodes.js"></script>
+<script>
+const $=s=>document.querySelector(s),P=$('#panel'),S=$('#stage');
+const KEY='vct_save_v1';let save=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}})();
+const store=()=>{try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}};
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+const COMP={prelever:'Prélever une information',reformuler:'Reformuler, comprendre un mot',inferer:'Comprendre ce qui n\'est pas dit',justifier:'Justifier avec le texte',point:'Comprendre le choix de l\'auteur'};
+const ERR={hors:"Cette idée n'est pas dans l'extrait. Relis-le : peux-tu montrer où c'est écrit ?",contresens:"Attention : ce que tu proposes dit presque le contraire du texte.",sur:"C'est aller trop loin : le texte ne dit pas cela.",sous:"C'est vrai, mais incomplet : il manque une partie de la réponse.",vraihq:"C'est écrit dans le texte, mais cela ne répond pas à la question posée.",litteral:"Tu as lu l'image au sens propre. Ici, l'auteur fait une comparaison.",gaucheDroite:"Tu as peut-être confondu la gauche du garçon et la gauche de l'écran.",ailleurs:"Ce morceau ne répond pas à la question.",saisie:"Ce n'est pas le bon mot. Relis la phrase."};
+const EXT=['png','jpg','jpeg','jfif','webp'];
+function img(base,cls,folder){const i=new Image();let k=0;i.className=cls||'';const t=()=>{i.src=`assets/${folder||'portraits'}/${base}.${EXT[k++]}`};i.onerror=()=>{if(k<EXT.length)t();else i.remove()};t();return i}
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+let ep,si;
+function home(){S.className='';S.innerHTML='';$('#prog').textContent='';
+ P.innerHTML='<h1>La Petite Fadette</h1><p>Lis des passages du roman de George Sand et réponds aux questions.</p>';
+ EPISODES.forEach((e,n)=>{const d=save.done&&save.done[e.id],pos=(save.pos||{})[e.id]||0;const b=document.createElement('button');b.className='btn';b.textContent=e.titre+(d?' ✓':pos?' (reprendre)':'');b.onclick=()=>start(n,d?0:pos);P.appendChild(b)})}
+function start(n,pos){ep=EPISODES[n];si=pos||0;go()}
+function go(){const sc=ep.scenes[si];if(!sc)return bilan();save.pos=save.pos||{};save.pos[ep.id]=si;store();
+ $('#prog').textContent=`${si+1} / ${ep.scenes.length}`;
+ S.innerHTML='';S.className=sc.sprites?'on':'';(sc.sprites||[]).forEach(s=>S.appendChild(img(s.img,s.side)));
+ P.innerHTML='';({resume:rResume,texte:rTexte}[sc.type]||rQ)(sc)}
+const next=()=>{si++;go()};
+function btn(txt,fn,alt){const b=document.createElement('button');b.className='btn'+(alt?' alt':'');b.textContent=txt;b.onclick=fn;return b}
+function box(x){return `<div class="extrait"><small>Texte de ${x.src}</small>${x.t}</div>`}
+function rResume(sc){P.innerHTML=`<div class="resume"><small>Résumé du jeu – ce n'est pas le texte de Sand</small>${sc.t}</div>`;P.appendChild(btn('Continuer',next))}
+function rTexte(sc){P.innerHTML=box(ep.extraits[sc.ref]);P.insertAdjacentHTML('beforeend','<p><em>Lis bien. Les questions arrivent ensuite, et tu pourras relire le texte.</em></p>');P.appendChild(btn('J\'ai lu, je continue',next))}
+function rQ(sc){const id=ep.id+':'+sc.id;const r=save.res=save.res||{};r[id]=r[id]||{c:sc.comp,t:0,h:0,e:[]};const R=r[id];
+ if(sc.type!=='clic')P.innerHTML=box(ep.extraits[sc.ref]);
+ P.insertAdjacentHTML('beforeend',`<div class="comp">${COMP[sc.comp]}</div><h2>${sc.q}</h2>`);
+ const A=document.createElement('div'),F=document.createElement('div'),H=document.createElement('div'),N=document.createElement('div');P.append(A,F,H,N);
+ let over=false,hn=0;
+ const hb=btn('💡 Un coup de pouce',()=>{if(hn<sc.aide.length){H.insertAdjacentHTML('beforeend',`<div class="hint">${hn+1}. ${sc.aide[hn]}</div>`);hn++;R.h++;store()}if(hn>=sc.aide.length)hb.disabled=true},1);N.appendChild(hb);
+ function finish(good,reveal){over=true;hb.remove();R.done=1;store();F.innerHTML=`<div class="fb ${good?'good':'bad'}">${good?'Bravo ! ':'La bonne réponse est montrée. '}${sc.expl}</div>`;N.appendChild(btn('Continuer',next))}
+ function tryit(ok,err,el){if(over)return;R.t++;if(ok){el.classList.add('good');return finish(true)}
+  el.classList.add('bad');if(el.tagName==='BUTTON')el.disabled=true;R.e.push(err);store();F.innerHTML=`<div class="fb bad">${ERR[err]||ERR.hors} Essaie encore.</div>`;
+  if(R.t>=3){const g=A.querySelector('[data-ok]');if(g)g.classList.add('good');finish(false)}}
+ if(sc.type==='qcm'){shuffle(sc.o).forEach(o=>{const b=document.createElement('button');b.className='opt';b.textContent=o.t;if(o.ok)b.dataset.ok=1;b.onclick=()=>tryit(o.ok,o.err,b);A.appendChild(b)})}
+ if(sc.type==='image'){A.className='imgs';shuffle(sc.o).forEach(o=>{const b=document.createElement('button');b.className='opt';if(o.ok)b.dataset.ok=1;const w=document.createElement('div');w.className=sc.crop?'face':'';const i=img(o.img,o.flip?'flip':'');w.appendChild(i);b.appendChild(w);b.onclick=()=>tryit(o.ok,o.err,b);A.appendChild(b)})}
+ if(sc.type==='clic'){const x=ep.extraits[sc.ref];A.className='extrait';A.innerHTML=`<small>Texte de ${x.src} – clique sur la bonne partie</small>`;sc.seg.forEach((t,k)=>{const s=document.createElement('span');s.className='seg';s.textContent=t;if(k===sc.ok)s.dataset.ok=1;s.onclick=()=>tryit(k===sc.ok,'ailleurs',s);A.append(s,' ')})}
+ if(sc.type==='saisie'){const i=document.createElement('input');i.type='text';i.autocomplete='off';const ok=btn('Valider',()=>{if(!i.value.trim())return;const good=sc.rep.map(norm).includes(norm(i.value));tryit(good,'saisie',i)});i.onkeydown=e=>{if(e.key==='Enter')ok.click()};A.append(i,ok);if(!over)i.focus()}
+}
+function bilan(){S.className='';S.innerHTML='';save.done=save.done||{};save.done[ep.id]=1;store();
+ const by={};Object.keys(save.res||{}).filter(k=>k.startsWith(ep.id+':')).forEach(k=>{const r=save.res[k];by[r.c]=by[r.c]||[0,0];by[r.c][1]++;if(r.t<=1&&!r.h)by[r.c][0]++});
+ P.innerHTML='<h1>Épisode terminé !</h1><p>Réussites du premier coup, sans coup de pouce :</p>'+Object.keys(by).map(c=>`<div>${COMP[c]} : ${by[c][0]} / ${by[c][1]}<div class="bar"><i style="width:${by[c][0]/by[c][1]*100}%"></i></div></div>`).join('');
+ P.appendChild(btn('Retour à l\'accueil',home))}
+home();
+</script></body></html>
