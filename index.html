@@ -9,6 +9,7 @@
 #app{max-width:1280px;margin:0 auto;min-height:100vh;background:var(--bg);display:flex;flex-direction:column;box-shadow:0 0 40px #0008}
 header{height:44px;padding:0 14px;background:var(--acc);color:#fff;display:flex;justify-content:space-between;align-items:center;font-size:.9rem;position:sticky;top:0;z-index:5}
 header button{font:inherit;font-size:.8rem;background:#fff2;color:#fff;border:1px solid #fff9;border-radius:14px;padding:3px 12px;margin-left:10px;cursor:pointer}header button[aria-pressed=true]{background:#fff;color:var(--acc)}
+header .hl,header .hr{display:flex;align-items:center;min-width:0}header .hl button{margin:0 10px 0 0}#ttl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #rot{display:none;background:#fff3c4;font:.85rem Arial;padding:6px 10px;cursor:pointer}
 @media (max-width:600px) and (orientation:portrait){#rot{display:block}}
 #wrap{flex:1}#right{padding:16px}
@@ -21,8 +22,9 @@ header button{font:inherit;font-size:.8rem;background:#fff2;color:#fff;border:1p
 .extrait{background:#fffaf0;border-left:5px solid var(--acc);padding:12px 14px;margin:0 0 14px;font-size:1.1rem;line-height:1.65;border-radius:0 8px 8px 0;box-shadow:0 1px 4px #0002}
 .extrait small,.resume small{display:block;color:var(--acc);font-style:italic;margin-bottom:6px;font-size:.8rem}
 .mot{border-bottom:2px dotted var(--acc);cursor:pointer}.note{margin-top:8px;padding:8px 10px;background:#fff3c4;border-radius:8px;font:.95rem/1.4 Arial,sans-serif}
-.resume{background:var(--res);border:2px dashed #5b8bb0;border-radius:10px;padding:12px 14px;font-family:Arial,sans-serif;font-size:1.05rem;line-height:1.55}
-.resume small{font-style:normal;font-weight:bold;color:#2d5f86;text-transform:uppercase;letter-spacing:.05em}
+.rsm{font-style:italic;color:#5a4f44;margin:0 0 12px;padding-left:12px;border-left:3px solid #c9b48f;font-size:1.02rem;line-height:1.6}
+.savoir{background:#fff;border:2px solid #c9b48f;border-radius:12px;padding:12px 16px;margin:0 0 14px;font-family:Arial,sans-serif;line-height:1.55;font-size:1rem}.savoir h3{margin:0 0 6px;font-family:Georgia,serif;color:var(--acc)}.savoir ul{margin:6px 0 0;padding-left:20px}.savoir li{margin:4px 0}
+.cadre{background:#f1e6cc;border-radius:8px;padding:6px 10px;margin:8px 0;font-size:.95rem}
 .perdu{background:#3a3030;color:#f1e6d6;border-radius:10px;padding:12px 14px;font-family:Arial,sans-serif;line-height:1.5}.perdu small{display:block;color:#e8a58f;font-weight:bold;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
 .comp{font:bold .75rem Arial;color:var(--acc);text-transform:uppercase;letter-spacing:.06em}
 h2{font-size:1.2rem;margin:4px 0 12px;line-height:1.4}button,.opt{font:inherit;cursor:pointer}
@@ -42,10 +44,11 @@ body.dys,body.dys *{font-family:Lexend,Verdana,sans-serif!important}
 body.dys #app{letter-spacing:.045em;word-spacing:.2em;line-height:1.95;font-size:1.1rem;background:#fbf7ea;color:#262626}
 body.dys #stage{display:none!important}body.dys #right{max-width:78ch}
 body.dys #wrap.quiz{display:block;height:auto;overflow:visible}body.dys #wrap.quiz #left{border:0;overflow:visible;padding:0 16px}body.dys #wrap.quiz #right{overflow:visible}
-body.dys .extrait,body.dys .resume,body.dys .perdu{font-size:1.15rem;line-height:2.05;max-width:70ch;text-align:left}
+body.dys .rsm{font-style:normal;background:#eef1f5;border-left-color:#8da2b8;padding:6px 12px}body.dys .rsm::before{content:"Résumé : ";font-weight:600}
+body.dys .extrait,body.dys .savoir,body.dys .resume,body.dys .perdu{font-size:1.15rem;line-height:2.05;max-width:70ch;text-align:left}
 body.dys .opt{line-height:1.8;padding:14px}
 </style></head><body><div id="app">
-<header><span id="ttl">La Petite Fadette – Lire et comprendre</span><span><span id="prog"></span><button id="dysb" aria-pressed="false" onclick="dys(!save.dys)">Mode DYS</button></span></header>
+<header><span class="hl"><button id="back" style="display:none" onclick="back()">← Retour</button><span id="ttl">La Petite Fadette</span></span><span class="hr"><span id="prog"></span><button onclick="menu()">Chapitres</button><button id="dysb" aria-pressed="false" onclick="dys(!save.dys)">Mode DYS</button></span></header>
 <div id="rot" onclick="this.style.display='none'">📱 Pour plus de confort, tourne ton téléphone en mode paysage (touche ici pour fermer). Tu peux toujours faire défiler l'écran.</div>
 <div id="wrap" class="read"><section id="left"><div id="stage"></div><div id="txt"></div></section><main id="right"><div id="panel"></div></main></div></div>
 <script src="data/episodes.js"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
@@ -79,33 +82,48 @@ const isQ=sc=>['resume','texte','album','defaite'].indexOf(sc.type)<0;
 function vis(sc){if(sc.decor||sc.sprites||sc.album)return sc;for(let k=si-1;k>=0;k--){const x=ep.scenes[k];if(x.ref===sc.ref&&(x.decor||x.sprites||x.album))return x}return null}
 const redraw=()=>{if(cur&&ep)drawStage(isQ(cur)?vis(cur):cur);else{const a=$('#accueil');if(a)a.style.height=Math.round(a.clientWidth*.5625)+'px'}};
 window.addEventListener('resize',redraw);
-const fmt=t=>t.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,(m,a,b)=>'<span class="mot" data-d="'+b.replace(/"/g,'&quot;')+'">'+a+'</span>');
+const fmt=t=>t.replace(/\{\{([\s\S]+?)\}\}/g,'<p class="rsm">$1</p>').replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,(m,a,b)=>'<span class="mot" data-d="'+b.replace(/"/g,'&quot;')+'">'+a+'</span>');
 document.addEventListener('click',e=>{const m=e.target.closest&&e.target.closest('.mot');if(!m)return;const b=m.closest('.extrait');let n=b.querySelector('.note');if(!n){n=document.createElement('div');n.className='note';b.appendChild(n)}n.innerHTML='<b>'+m.textContent+'</b> : '+m.dataset.d});
 function dys(v){save.dys=!!v;document.body.classList.toggle('dys',!!v);$('#dysb').setAttribute('aria-pressed',!!v);store();redraw()}
 /* ---------- accueil ---------- */
-function home(){cur=null;drawStage(null);W.className='read';T.innerHTML='';$('#prog').textContent='';$('#ttl').textContent='La Petite Fadette – Lire et comprendre';
+function home(){cur=null;$('#back').style.display='none';drawStage(null);W.className='read';T.innerHTML='';$('#prog').textContent='';$('#ttl').textContent='La Petite Fadette';
  P.innerHTML='';const a=el('','');a.id='accueil';a.style.backgroundImage="url('assets/ui/ecran_accueil.jpg')";
  const n=el('<h1>La Petite Fadette</h1><div>Lire et comprendre un roman de George Sand</div>');n.className='in';a.appendChild(n);P.appendChild(a);a.style.height=Math.round(a.clientWidth*.5625)+'px';
- const L=el('');EPISODES.forEach((e,k)=>{const d=save.done&&save.done[e.id],pos=(save.pos||{})[e.id]||0;
-  L.appendChild(btn(e.titre+(e.tuto?' (tuto)':'')+(d?' ✓':pos?' (reprendre)':''),()=>start(e,d?0:pos)))});
+ const L=el(''),cur1=EPISODES.find(e=>!(save.done&&save.done[e.id]))||EPISODES[EPISODES.length-1],p1=(save.pos||{})[cur1.id]||0;
+ L.appendChild(btn(p1?'Continuer l\'histoire':'Commencer',()=>start(cur1,p1)));L.appendChild(btn('Choisir un chapitre',menu,1));
  const v=Object.keys(save.def||{}).length;if(v)L.appendChild(el(`<p><small>Fins perdues découvertes : ${v} / ${Object.keys(DEFAITES).length}</small></p>`));P.appendChild(L)}
-function start(e,pos){ep=e;si=pos||0;if(!ep.seul){save.jet=save.jet||{};if(pos===0)save.jet[ep.id]=0}go()}
+function menu(){cur=null;ep=null;drawStage(null);W.className='read';T.innerHTML='';$('#back').style.display='none';$('#prog').textContent='';P.innerHTML='<h2>Choisis un chapitre</h2>';
+ EPISODES.forEach(e=>{const d=save.done&&save.done[e.id],pos=(save.pos||{})[e.id]||0,c=el(`<b>${e.titre}</b><br><small>${e.chap||''}${d?' · terminé ✓':pos?' · en cours':''}</small>`,'extrait');
+  if(pos&&!d)c.appendChild(btn('Reprendre',()=>start(e,pos)));c.appendChild(btn(d?'Relire l\'histoire':'Commencer',()=>start(e,0),pos&&!d));P.appendChild(c)});
+ P.appendChild(btn('← Accueil',home,1))}
+function back(){if(ep&&si>0){si--;go()}else menu()}
+function start(e,pos){ep=e;si=pos||0;if(!ep.seul){save.jet=save.jet||{};if(pos===0&&!(save.done&&save.done[ep.id]))save.jet[ep.id]=0}go()}
 function go(){const sc=ep.scenes[si];if(!sc)return bilan();cur=sc;
- if(!ep.seul){save.pos=save.pos||{};save.pos[ep.id]=si;store()}
- $('#prog').textContent=`${si+1} / ${ep.scenes.length}`+(ep.tuto?' · tuto':'');const q=isQ(sc);W.className=q?'quiz':'read';drawStage(q?vis(sc):sc);P.innerHTML='';T.innerHTML='';window.scrollTo(0,0);
+ if(!ep.seul){save.pos=save.pos||{};save.pos[ep.id]=Math.max(save.pos[ep.id]||0,si);store()}
+ $('#prog').textContent=`${si+1} / ${ep.scenes.length}`+(ep.tuto?' · tuto':'');$('#back').style.display=(!ep.seul&&si>0)?'':'none';const q=isQ(sc);W.className=q?'quiz':'read';drawStage(q?vis(sc):sc);P.innerHTML='';T.innerHTML='';window.scrollTo(0,0);
  ({resume:rResume,texte:rTexte,album:rAlbum,defaite:rDefaite}[sc.type]||rQ)(sc)}
 const next=()=>{si++;go()};
-const box=x=>`<div class="extrait"><small>Texte de ${x.src}</small>${fmt(x.t)}</div>`;
-function rResume(sc){P.innerHTML=`<div class="resume"><small>Résumé du jeu – ce n'est pas le texte de Sand</small>${sc.t}</div>`;P.appendChild(btn('Continuer',next))}
-function rTexte(sc){P.innerHTML=box(ep.extraits[sc.ref]);P.insertAdjacentHTML('beforeend','<p><em>Lis bien. Les questions arrivent ensuite, et tu pourras relire le texte.</em></p>');P.appendChild(btn('J\'ai lu, je continue',next))}
-function rAlbum(sc){const x=sc.ref?ep.extraits[sc.ref]:sc;P.innerHTML=`<div class="extrait cap"><small>Texte de ${x.src}</small>${fmt(x.t)}</div>`;P.appendChild(btn('Continuer',next))}
+const box=x=>`<div class="extrait"><small>${x.src}</small>${fmt(x.t)}</div>`;
+function rResume(sc){P.innerHTML=`<p class="rsm">${sc.t}</p>`;P.appendChild(btn('Continuer',next))}
+const SAVOIR=`<div class="savoir"><h3>Bon à savoir : comment lire un extrait</h3>Dans un livre, tout n'est pas écrit par l'auteur. Le titre, le nom de l'auteur, les notes, les résumés, les illustrations forment le <b>paratexte</b> : ce qui entoure le texte sans en faire partie.<ul><li>Le texte de George Sand est écrit en caractères <b>droits</b>.</li><li>Un <b>résumé</b> est écrit en <i>italique</i> (caractères penchés). Il raconte ce qu'on a sauté, mais il n'est pas de l'auteur.</li><li><b>[...]</b> montre qu'une partie du texte a été coupée.</li><li>Un mot <span class="mot" data-d="Touche un mot souligné : sa note apparaît.">souligné en pointillés</span> a une note : touche-le.</li></ul></div>`;
+function rTexte(sc){const n=ep.scenes[si+1];P.innerHTML=(sc.savoir?SAVOIR:'')+box(ep.extraits[sc.ref]);P.appendChild(btn(n&&isQ(n)?"J'ai lu : aux questions":'Continuer',next))}
+function rAlbum(sc){const x=sc.ref?ep.extraits[sc.ref]:sc;P.innerHTML=`<div class="extrait cap"><small>${x.src}</small>${fmt(x.t)}</div>`;P.appendChild(btn('Continuer',next))}
 /* ---------- fin perdue : image + texte du jeu, puis reprise au dernier texte lu ---------- */
 function rDefaite(sc){const d=DEFAITES[sc.id];S.innerHTML='';S.className='on';S.appendChild(img(d.img,'full','defaites'));
  P.innerHTML=`<div class="perdu"><small>Fin perdue – ${d.titre}</small>${d.t}</div>`;
  P.appendChild(btn('Reprendre la lecture',()=>{ep.scenes.forEach((s,n)=>{if(n>=sc.retour&&s.id)delete save.res[ep.id+':'+s.id]});store();si=sc.retour;go()}))}
 function perdre(id){save.def=save.def||{};save.def[id]=1;store();let k=si;while(k>0&&ep.scenes[k].type!=='texte')k--;rDefaite({id:id,retour:k})}
 /* ---------- questions ---------- */
-function rQ(sc){const id=ep.id+':'+sc.id,r=save.res=save.res||{};r[id]=r[id]||{c:sc.comp,t:0,h:0,e:[]};const R=r[id];
+function review(sc,R){if(sc.type!=='clic')T.innerHTML=box(ep.extraits[sc.ref]);
+ const top=btn('↻ Refaire l\'exercice',()=>rQ(sc,true),1);top.style.margin='0 0 10px';P.appendChild(top);
+ P.insertAdjacentHTML('beforeend',`<div class="comp">${COMP[sc.comp]}</div><h2>${sc.q}</h2>`);
+ if(sc.type==='qcm')sc.o.filter(o=>o.ok).forEach(o=>P.insertAdjacentHTML('beforeend',`<div class="opt good">${o.t}</div>`));
+ if(sc.type==='saisie')P.insertAdjacentHTML('beforeend',`<div class="opt good">${sc.rep[0]}</div>`);
+ if(sc.type==='clic')P.insertAdjacentHTML('beforeend',`<div class="opt good">${sc.seg[sc.ok]}</div>`);
+ if(sc.type==='image')sc.o.filter(o=>o.ok).forEach(o=>{const w=el('','opt good '+(sc.crop?'face':''));w.appendChild(img(o.img,o.flip?'flip':''));P.appendChild(w)});
+ P.insertAdjacentHTML('beforeend',`<div class="fb good">${sc.expl}</div>`);P.appendChild(btn('Continuer',next))}
+function rQ(sc,redo){const id=ep.id+':'+sc.id,r=save.res=save.res||{};r[id]=r[id]||{c:sc.comp,t:0,h:0,e:[]};const R=r[id];
+ if(R.done&&!redo)return review(sc,R);if(redo){R.t=0;R.e=[];R.done=0;P.innerHTML='';T.innerHTML=''}
  const tuto=ep.tuto||ep.seul,jet=()=>MAXJ-((save.jet||{})[ep.id]||0);
  if(sc.type!=='clic')T.innerHTML=box(ep.extraits[sc.ref]);
  P.insertAdjacentHTML('beforeend',`<div class="comp">${COMP[sc.comp]}</div><h2>${sc.q}</h2>`);
@@ -132,8 +150,8 @@ function bilan(){drawStage(null);if(ep.seul){ep=ep.orig;return home()}
  P.innerHTML='<h1>Épisode terminé !</h1><p>Réussites du premier coup, sans coup de pouce :</p>'+Object.keys(by).map(c=>`<div>${COMP[c]} : ${by[c][0]} / ${by[c][1]}<div class="bar"><i style="width:${by[c][0]/by[c][1]*100}%"></i></div></div>`).join('');
  const dur=ks.filter(k=>save.res[k].h3);
  if(dur.length){P.insertAdjacentHTML('beforeend',`<p>Pour ${dur.length} question${dur.length>1?'s':''}, tu as eu besoin du dernier indice de Sauteriot. Tu veux les refaire seul ?</p>`);
-  P.appendChild(btn('Refaire seul',()=>{const sc=[];dur.forEach(k=>{const q=ep.scenes.find(s=>ep.id+':'+s.id===k);if(!q)return;const t=ep.scenes.find(s=>s.type==='texte'&&s.ref===q.ref);if(t&&!sc.includes(t))sc.push(t);sc.push(q)});
+  P.appendChild(btn('Refaire seul',()=>{const sc=[];dur.forEach(k=>{save.res[k].done=0;const q=ep.scenes.find(s=>ep.id+':'+s.id===k);if(!q)return;const t=ep.scenes.find(s=>s.type==='texte'&&s.ref===q.ref);if(t&&!sc.includes(t))sc.push(t);sc.push(q)});
    ep={...ep,seul:1,orig:ep,scenes:sc};start(ep,0)}))}
- P.appendChild(btn('Retour à l\'accueil',home,1))}
+ P.appendChild(btn('Choisir un chapitre',menu,1))}
 dys(!!save.dys);home();
 </script></body></html>

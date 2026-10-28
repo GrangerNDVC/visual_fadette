@@ -12,3 +12,10 @@ v2.2 : épisode 1 remis dans l'ordre du roman, avec résumés, notes et question
 - Notes sur les mots : écrire [[mot|définition]] dans le texte d'un extrait ; l'élève touche le mot pour lire la note. Ne pas en mettre sur le mot qu'une question demande d'expliquer.
 - Écran de questions : image et texte à gauche, questions à droite. Bouton « Mode DYS » en haut : texte puis questions en une colonne, police Lexend (assets/fonts), espacement large, sans image. Le choix est mémorisé.
 - Une scène album peut porter une question : lui donner ref:"D" et déclarer l'extrait D dans extraits ; l'image reste à gauche pendant les questions.
+
+v2.3 : paratexte et navigation.
+- Résumés : écrire {{texte du résumé}} dans un extrait, au début ou au milieu ; il s'affiche en italique (en mode DYS : sans italique, précédé de « Résumé : »). Un résumé ne doit pas répéter ce que dit le texte qui suit.
+- La première scène (savoir:true) explique paratexte, italique, [...] et notes. Ne la mettre qu'une fois.
+- Une scène texte peut avoir une image d'album : album:"album_04_avertissement_sagette" (l'image reste à gauche pendant les questions).
+- Bouton « ← Retour » : scène précédente. Un exercice déjà fait s'affiche corrigé, avec « Refaire l'exercice » ; « Continuer » reprend l'histoire.
+- Bouton « Chapitres » : menu pour reprendre ou relire un chapitre depuis le début.

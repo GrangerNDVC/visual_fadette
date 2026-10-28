@@ -3,69 +3,51 @@ window.EPISODES=[
 "id": "ep1",
 "tuto": true,
 "titre": "Épisode 1 – Les bessons de la Bessonnière",
-"chap": "La Petite Fadette, chap. I–II",
+"chap": "La Petite Fadette, chapitres I et II",
 "extraits": {
 "A": {
-"src": "George Sand, chap. I",
-"t": "Le père Barbeau de la Cosse n'était pas mal dans ses affaires, à preuve qu'il était du [[conseil municipal|groupe d'habitants élus pour s'occuper des affaires du village]] de sa commune. Il avait deux champs qui lui donnaient la nourriture de sa famille et du profit par-dessus le marché."
-},
-"H": {
-"src": "George Sand, chap. I",
-"t": "La maison du père Barbeau était bien bâtie, couverte en tuile, établie en bon air sur la côte, avec un jardin [[de bon rapport|qui produit beaucoup]] et une vigne de six [[journaux|ancienne mesure de surface : ce qu'on pouvait labourer en une journée]]."
+"src": "George Sand, La Petite Fadette, chapitre I",
+"t": "{{Ce roman raconte l'histoire de deux frères qui grandissent dans un village du centre de la France, au XIXᵉ siècle. Mais George Sand commence par présenter leur père.}}Le père Barbeau de la Cosse n'était pas mal dans ses affaires, à preuve qu'il était du [[conseil municipal|groupe d'habitants élus pour s'occuper des affaires du village]] de sa commune. Il avait deux champs qui lui donnaient la nourriture de sa famille et du profit par-dessus le marché. [...]<br><br>La maison du père Barbeau était bien bâtie, couverte en tuile, établie en bon air sur la côte, avec un jardin [[de bon rapport|qui produit beaucoup]] et une vigne de six [[journaux|ancienne mesure de surface : ce qu'on pouvait labourer en une journée]]. Enfin il avait, derrière sa grange, un beau verger, que nous appelons chez nous une ouche, où le fruit abondait tant en prunes qu'en [[guignes|sortes de cerises]], en poires et en [[cormes|petits fruits du cormier, qui ressemblent à des poires]]. [...]<br><br>Le père Barbeau était un homme [[de bon courage|travailleur, plein d'énergie]], pas méchant, et très porté pour sa famille, sans être injuste à ses voisins et [[paroissiens|habitants de la paroisse, c'est-à-dire du village]]."
 },
 "B": {
-"src": "George Sand, chap. I",
+"src": "George Sand, La Petite Fadette, chapitre I",
 "t": "Il avait déjà trois enfants quand la mère Barbeau, voyant sans doute qu'elle avait assez de [[bien|ici : richesse, ce qu'on possède]] pour cinq et qu'il fallait se dépêcher, parce que l'âge lui venait, [[s'avisa de|eut l'idée de]] lui en donner deux à la fois, deux beaux garçons ; et, comme ils étaient si pareils qu'on ne pouvait presque pas les distinguer l'un de l'autre, on reconnut bien vite que c'étaient deux bessons, c'est-à-dire deux jumeaux d'une parfaite ressemblance."
 },
 "S": {
-"src": "George Sand, chap. I",
-"t": "La mère [[sagette|sage-femme : femme qui aide à mettre les enfants au monde]], qui les reçut dans son tablier comme ils venaient au monde, n'oublia pas de faire au premier-né une petite croix sur le bras avec son aiguille [...]"
+"src": "George Sand, La Petite Fadette, chapitre I",
+"t": "La mère [[sagette|sage-femme : femme qui aide à mettre les enfants au monde]], qui les reçut dans son tablier comme ils venaient au monde, n'oublia pas de faire au premier-né une petite croix sur le bras avec son aiguille parce que, disait-elle, un bout de ruban ou un collier peut [[se confondre|être mélangé, pris pour un autre]] et faire perdre le [[droit d'aînesse|privilège du premier-né, de l'aîné]]. Quand l'enfant sera plus fort, dit-elle, il faudra lui faire une marque qui ne puisse jamais s'effacer ; à quoi l'on ne manqua pas.<br><br>L'aîné fut nommé Sylvain, dont on fit bientôt Sylvinet, pour le distinguer de son frère aîné, qui lui avait servi de [[parrain|personne qui présente l'enfant au baptême et veille sur lui]] ; et le cadet fut appelé Landry, nom qu'il garda comme il l'avait reçu au baptême parce que son oncle, qui était son parrain, avait gardé de son jeune âge la coutume d'être appelé Landriche."
 },
 "P": {
-"src": "George Sand, chap. I",
-"t": "– Oh ! oh ! fit-il, voilà un berceau qui est trop étroit. Demain matin, il me faudra l'agrandir."
+"src": "George Sand, La Petite Fadette, chapitre I",
+"t": "Le père Barbeau fut un peu étonné, quand il revint du marché, de voir deux petites têtes dans le berceau.<br>– Oh ! oh ! fit-il, voilà un berceau qui est trop étroit. Demain matin, il me faudra l'agrandir."
 },
 "D": {
-"src": "George Sand, chap. I",
-"t": "– [[À la bonne heure|Très bien (expression de satisfaction)]] ! fit le père Barbeau en se grattant la tête ; mais j'ai [[ouï dire|entendu dire]] que les bessons prenaient tant d'amitié l'un pour l'autre, que quand ils se quittaient ils ne pouvaient plus vivre et qu'un des deux, tout au moins, se laissait [[consumer|dépérir, s'user peu à peu]] par le chagrin jusqu'à en mourir.<br>– C'est la vraie vérité, dit la mère sagette ; mais écoutez ce qu'une femme d'expérience va vous dire. Ne le mettez pas en oubliance ; car, dans le temps où vos enfants seront en âge de vous quitter, je ne serai peut-être plus de ce monde pour vous conseiller. Faites attention, dès que vos bessons commenceront à se reconnaître, de ne pas les laisser toujours ensemble."
+"src": "George Sand, La Petite Fadette, chapitre I",
+"t": "{{La mère Barbeau a peur : on lui a dit que les jumeaux sont fragiles. La sagette la rassure, car les bébés se portent bien. Mais le père Barbeau a entendu dire autre chose.}}– [[À la bonne heure|Très bien (expression de satisfaction)]] ! fit le père Barbeau en se grattant la tête ; mais j'ai [[ouï dire|entendu dire]] que les bessons prenaient tant d'amitié l'un pour l'autre, que quand ils se quittaient ils ne pouvaient plus vivre et qu'un des deux, tout au moins, se laissait [[consumer|dépérir, s'user peu à peu]] par le chagrin jusqu'à en mourir.<br>– C'est la vraie vérité, dit la mère sagette ; mais écoutez ce qu'une femme d'expérience va vous dire. Ne le mettez pas en oubliance ; car, dans le temps où vos enfants seront en âge de vous quitter, je ne serai peut-être plus de ce monde pour vous conseiller. Faites attention, dès que vos bessons commenceront à se reconnaître, de ne pas les laisser toujours ensemble."
 },
 "E": {
-"src": "George Sand, chap. I",
-"t": "Ce que je vous dis là, j'ai grand peur que vous ne le mettiez dans l'oreille du chat ; mais si vous ne le faites pas, [[vous vous en repentirez|vous le regretterez]] grandement un jour."
+"src": "George Sand, La Petite Fadette, chapitre I",
+"t": "Emmenez l'un au travail pendant que l'autre gardera la maison. Quand l'un ira pêcher, envoyez l'autre à la chasse [...] {{La sagette conseille aussi de ne pas les habiller de la même façon et de ne pas les corriger en même temps.}}Enfin, par tous les moyens que vous pourrez imaginer, empêchez-les de se confondre l'un avec l'autre et de s'accoutumer à ne pas se passer l'un de l'autre. Ce que je vous dis là, j'ai grand peur que vous ne le mettiez dans l'oreille du chat ; mais si vous ne le faites pas, [[vous vous en repentirez|vous le regretterez]] grandement un jour."
 },
 "C": {
-"src": "George Sand, chap. II",
-"t": "Au premier moment, on ne faisait point entre eux de différence et on croyait voir un œuf et un œuf. Mais, quand on les avait observés un quart d'heure, on voyait que Landry était [[une miette|un tout petit peu]] plus grand et plus fort, qu'il avait le cheveu un peu plus épais, le nez plus fort et l'œil plus vif. Il avait aussi le front plus large et l'air plus décidé, et [[mêmement|aussi, de plus]] un [[signe|ici : petite marque sur la peau, comme un grain de beauté]] que son frère avait à la joue droite, il l'avait à la joue gauche et beaucoup plus marqué."
+"src": "George Sand, La Petite Fadette, chapitre II",
+"t": "{{Les parents promettent à la sagette de suivre ses conseils. Les années passent.}}Les bessons croissaient à plaisir sans être malades plus que d'autres enfants et, mêmement, ils avaient le tempérament si doux et si bien façonné qu'on eût dit qu'ils ne souffraient point de leurs dents ni de leur croît, autant que le reste du petit monde. Ils étaient blonds et restèrent blonds toute leur vie. Ils avaient tout à fait bonne mine, de grands yeux bleus, les épaules bien avalées, le corps droit et bien planté, plus de taille et de [[hardiesse|audace, courage]] que tous ceux de leur âge [...] {{Habitués à être regardés par tous les passants, les bessons ne sont jamais timides devant les étrangers.}}Au premier moment, on ne faisait point entre eux de différence et on croyait voir un œuf et un œuf. Mais, quand on les avait observés un quart d'heure, on voyait que Landry était [[une miette|un tout petit peu]] plus grand et plus fort, qu'il avait le cheveu un peu plus épais, le nez plus fort et l'œil plus vif. Il avait aussi le front plus large et l'air plus décidé, et mêmement un [[signe|ici : petite marque sur la peau, comme un grain de beauté]] que son frère avait à la joue droite, il l'avait à la joue gauche et beaucoup plus marqué."
 },
 "F": {
-"src": "George Sand, chap. II",
-"t": "M. le curé avait dit que la mère sagette était une [[radoteuse|femme qui répète sans cesse les mêmes choses]] et que ce que le bon Dieu avait mis dans les lois de la nature ne pouvait être défait par les hommes, si bien qu'on oublia peu à peu tout ce qu'on s'était promis de faire."
+"src": "George Sand, La Petite Fadette, chapitre II",
+"t": "{{Les gens du village finissent par bien reconnaître les deux frères, sauf à la nuit tombante. Seule leur mère ne se trompe jamais. Landry est un peu plus gai et courageux, Sylvinet plus tendre et plus fin.}}On pensa bien, pendant trois mois, à les empêcher de trop s'accoutumer l'un à l'autre. Trois mois, c'est beaucoup en campagne, pour observer une chose contre la coutume. Mais, d'un côté on ne voyait point que cela fit grand effet ; d'autre part, M. le curé avait dit que la mère sagette était une [[radoteuse|femme qui répète sans cesse les mêmes choses]] et que ce que le bon Dieu avait mis dans les lois de la nature ne pouvait être défait par les hommes, si bien qu'on oublia peu à peu tout ce qu'on s'était promis de faire."
 },
 "G": {
-"src": "George Sand, chap. II",
-"t": "[...] ils s'en allèrent tous deux par les chemins, se tenant par la main et ne voulant plus rentrer, tant ils avaient [[d'aise|de plaisir, de bonheur]] d'être ensemble [...]"
+"src": "George Sand, La Petite Fadette, chapitre II",
+"t": "{{Les garçons grandissent sans que rien ne change : on les habille pareil, ils font les mêmes bêtises. Même quand leurs parents tentent de les rendre jaloux l'un de l'autre, cela ne marche pas.}}Bonheur ou malheur, cette amitié-là augmentait toujours avec l'âge, et le jour où ils surent raisonner un peu, ces enfants se dirent qu'ils ne pouvaient pas s'amuser avec d'autres enfants quand un des deux ne s'y trouvait pas ; et, le père ayant essayé d'en garder un toute la journée avec lui tandis que l'autre restait avec la mère, tous les deux furent si tristes, si pâles et si lâches au travail, qu'on les crut malades. Et puis quand ils se retrouvèrent le soir, ils s'en allèrent tous deux par les chemins, se tenant par la main et ne voulant plus rentrer, tant ils avaient [[d'aise|de plaisir, de bonheur]] d'être ensemble, et aussi parce qu'ils boudaient un peu leurs parents de leur avoir fait ce chagrin-là."
 }
 },
 "scenes": [
 {
-"type": "resume",
-"t": "L'histoire commence à la Cosse, un village de campagne, dans le centre de la France, il y a près de deux siècles. Tu vas lire des extraits du roman de George Sand. Entre les extraits, de petits résumés (dans un cadre bleu) racontent ce qu'on a sauté. Les mots soulignés en pointillés ont une explication : touche-les pour la lire.",
-"decor": "d01_bessonniere_ext",
-"sprites": [
-{
-"img": "pere_barbeau_55",
-"side": "left"
-},
-{
-"img": "mere_barbeau_50",
-"side": "right"
-}
-]
-},
-{
 "type": "texte",
 "ref": "A",
-"decor": "d01_bessonniere_ext"
+"album": "album_01_la_cosse",
+"savoir": true
 },
 {
 "type": "qcm",
@@ -110,7 +92,7 @@ window.EPISODES=[
 "ok": 1
 },
 {
-"t": "Il possède deux champs.",
+"t": "Il possède une belle maison.",
 "err": "vraihq"
 },
 {
@@ -128,26 +110,6 @@ window.EPISODES=[
 "Lis ce qui vient juste après « à preuve qu'il était »."
 ],
 "expl": "Après « à preuve », l'auteur donne sa preuve : il est du conseil municipal."
-},
-{
-"type": "album",
-"album": "album_01_la_cosse",
-"ref": "H"
-},
-{
-"type": "resume",
-"t": "Le père Barbeau et sa femme ont déjà trois enfants. La mère Barbeau n'est plus très jeune. Un jour, elle accouche, et il y a une grande surprise : deux bébés naissent en même temps.",
-"decor": "d02_bessonniere_int",
-"sprites": [
-{
-"img": "pere_barbeau_55",
-"side": "left"
-},
-{
-"img": "mere_barbeau_50",
-"side": "right"
-}
-]
 },
 {
 "type": "texte",
@@ -225,27 +187,50 @@ window.EPISODES=[
 "expl": "« Parce que » annonce la cause : l'âge lui venait."
 },
 {
-"type": "album",
-"album": "album_02_naissance_sagette",
-"ref": "S"
+"type": "texte",
+"ref": "S",
+"album": "album_02_naissance_sagette"
 },
 {
-"type": "resume",
-"t": "Quand le père Barbeau revient du marché, il découvre deux petites têtes dans le berceau."
+"type": "qcm",
+"id": "q14",
+"comp": "justifier",
+"ref": "S",
+"q": "Pourquoi la sagette fait-elle une petite croix sur le bras du premier-né ?",
+"o": [
+{
+"t": "Pour pouvoir toujours reconnaître lequel est l'aîné.",
+"ok": 1
 },
 {
-"type": "album",
-"album": "album_03_berceau_trop_etroit",
-"ref": "P"
+"t": "Pour le protéger de la maladie.",
+"err": "hors"
 },
 {
-"type": "resume",
-"t": "La mère Barbeau a peur : on lui a dit que les jumeaux sont fragiles. La sagette la rassure. Mais le père Barbeau a entendu dire autre chose, qui l'inquiète."
+"t": "Parce que c'est la coutume au baptême.",
+"err": "hors"
 },
 {
-"type": "album",
-"album": "album_04_avertissement_sagette",
-"ref": "D"
+"t": "Pour le distinguer des autres enfants de la famille.",
+"err": "sur"
+}
+],
+"aide": [
+"Cherche « parce que, disait-elle ».",
+"Le texte parle d'un ruban ou d'un collier qui peut « se confondre ».",
+"Que risque-t-on de perdre si on ne sait plus qui est l'aîné ?"
+],
+"expl": "Un ruban ou un collier peut se confondre : la croix permet de savoir qui est l'aîné et de lui garder son droit d'aînesse."
+},
+{
+"type": "texte",
+"ref": "P",
+"album": "album_03_berceau_trop_etroit"
+},
+{
+"type": "texte",
+"ref": "D",
+"album": "album_04_avertissement_sagette"
 },
 {
 "type": "qcm",
@@ -310,9 +295,9 @@ window.EPISODES=[
 "expl": "« Mettre en oubliance », c'est laisser oublier. La sagette demande de ne pas oublier, car elle ne sera peut-être plus là plus tard."
 },
 {
-"type": "album",
-"album": "album_05_oreille_du_chat",
-"ref": "E"
+"type": "texte",
+"ref": "E",
+"album": "album_05_oreille_du_chat"
 },
 {
 "type": "qcm",
@@ -344,21 +329,6 @@ window.EPISODES=[
 "Que n'auront pas fait les parents ?"
 ],
 "expl": "Si les parents ne suivent pas le conseil, ils le regretteront. Mettre un conseil « dans l'oreille du chat », c'est ne pas en tenir compte."
-},
-{
-"type": "resume",
-"t": "Les parents promettent de suivre ces conseils. Les bessons grandissent. Ils s'appellent Landry et Sylvinet. Quand on les voit, on les trouve très beaux, mais on a du mal à les reconnaître.",
-"decor": "d01_bessonniere_ext",
-"sprites": [
-{
-"img": "landry_8_enfance",
-"side": "left"
-},
-{
-"img": "sylvinet_8_enfance",
-"side": "right"
-}
-]
 },
 {
 "type": "texte",
@@ -469,13 +439,9 @@ window.EPISODES=[
 "expl": "Si on a besoin d'un quart d'heure, c'est que la ressemblance est très forte."
 },
 {
-"type": "resume",
-"t": "Au début, les parents font attention : ils essaient de ne pas laisser les bessons toujours ensemble. Cela dure trois mois."
-},
-{
-"type": "album",
-"album": "album_07_on_oublia",
-"ref": "F"
+"type": "texte",
+"ref": "F",
+"album": "album_07_on_oublia"
 },
 {
 "type": "qcm",
@@ -509,13 +475,40 @@ window.EPISODES=[
 "expl": "Le curé a dit que la sagette radotait et que les hommes ne peuvent pas défaire ce que Dieu a mis dans la nature : « si bien qu'on oublia » ses conseils."
 },
 {
-"type": "resume",
-"t": "Landry et Sylvinet sont habillés pareil, ils font les mêmes bêtises, et ils ne veulent plus se quitter."
+"type": "texte",
+"ref": "G",
+"album": "album_06_main_dans_la_main"
 },
 {
-"type": "album",
-"album": "album_06_main_dans_la_main",
-"ref": "G"
+"type": "qcm",
+"id": "q15",
+"comp": "inferer",
+"ref": "G",
+"q": "Pourquoi les bessons « boudent »-ils un peu leurs parents ?",
+"o": [
+{
+"t": "Parce que leurs parents ont essayé de les séparer pour la journée.",
+"ok": 1
+},
+{
+"t": "Parce qu'ils ont été grondés.",
+"err": "hors"
+},
+{
+"t": "Parce qu'ils sont fatigués par le travail.",
+"err": "vraihq"
+},
+{
+"t": "Parce qu'ils ne veulent plus rentrer chez eux.",
+"err": "contresens"
+}
+],
+"aide": [
+"Cherche « boudaient » à la fin du passage.",
+"La fin de la phrase donne la raison : « de leur avoir fait ce chagrin-là ».",
+"Quel chagrin leurs parents leur ont-ils fait plus haut ?"
+],
+"expl": "Les parents ont gardé un garçon avec eux et l'autre avec la mère : les deux ont eu du chagrin, et ils en veulent un peu à leurs parents."
 }
 ]
 }
