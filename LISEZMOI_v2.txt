@@ -1,0 +1,14 @@
+La Petite Fadette – moteur v2 (chantier 1)
+Copier ces fichiers PAR-DESSUS ton dossier de projet (index.html, data/, assets/album, assets/defaites, assets/ui, assets/sprites_meta.js et .json, calcul_echelles.py).
+- Pas besoin de renvoyer les sprites : ils restent dans assets/sprites/.
+- assets/sprites_meta.js est lu par le jeu. Après chaque ajout de sprite : python calcul_echelles.py assets (il régénère les deux fichiers).
+- Décors : déposer decor_xxx.png dans assets/decors/ et mettre decor:"decor_xxx" dans une scène (sinon fond vert provisoire).
+- Épisode tuto : tuto:true dans l'épisode. Indices de Sauteriot : épisode sans tuto, champ aide:[3 niveaux] par question (3 jetons par épisode).
+- Fin perdue : pivot:"d03" dans une question (non tuto) ; textes dans data/defaites.js.
+
+v2.1 : décors d01 à d22 dans assets/decors ; illustrations a01 à a12 dans assets/album ; ouvrir index.html?test=1 pour essayer les indices de Sauteriot, une fin perdue et le bilan (épisode d'essai).
+
+v2.2 : épisode 1 remis dans l'ordre du roman, avec résumés, notes et questions entre les extraits.
+- Notes sur les mots : écrire [[mot|définition]] dans le texte d'un extrait ; l'élève touche le mot pour lire la note. Ne pas en mettre sur le mot qu'une question demande d'expliquer.
+- Écran de questions : image et texte à gauche, questions à droite. Bouton « Mode DYS » en haut : texte puis questions en une colonne, police Lexend (assets/fonts), espacement large, sans image. Le choix est mémorisé.
+- Une scène album peut porter une question : lui donner ref:"D" et déclarer l'extrait D dans extraits ; l'image reste à gauche pendant les questions.
