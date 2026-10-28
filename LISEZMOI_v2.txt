@@ -19,3 +19,5 @@ v2.3 : paratexte et navigation.
 - Une scène texte peut avoir une image d'album : album:"album_04_avertissement_sagette" (l'image reste à gauche pendant les questions).
 - Bouton « ← Retour » : scène précédente. Un exercice déjà fait s'affiche corrigé, avec « Refaire l'exercice » ; « Continuer » reprend l'histoire.
 - Bouton « Chapitres » : menu pour reprendre ou relire un chapitre depuis le début.
+
+v2.4 : deux pages d'introduction avant l'histoire (scènes type:"info", HTML libre dans t, image d'accueil avec ui:"ecran_accueil") : bienvenue et but du jeu, puis « Bon à savoir : comment lire un extrait » avec un exemple. Elles sont dans data/episodes.js, au début de l'épisode 1.

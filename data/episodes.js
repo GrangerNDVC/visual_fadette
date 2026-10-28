@@ -44,10 +44,18 @@ window.EPISODES=[
 },
 "scenes": [
 {
+"type": "info",
+"ui": "ecran_accueil",
+"t": "<div class=\"savoir\"><h3>Bienvenue dans « La Petite Fadette »</h3>Dans ce jeu, tu vas découvrir un roman de George Sand, publié en 1849 : une œuvre littéraire du XIX<sup>e</sup> siècle. C'est l'histoire de deux frères qui grandissent dans un village de campagne, et d'une petite fille que tout le monde craint.<ul><li><b>Découvrir une œuvre</b> : tu lis de vrais passages du roman et tu enrichis ta culture générale.</li><li><b>T'entraîner à comprendre</b> ce que tu lis : après chaque passage, des questions te font chercher dans le texte.</li><li><b>T'amuser</b> : des images, des personnages, des fins perdues si tu lis trop vite… Se tromper fait partie du jeu : chaque erreur est expliquée, et tu peux réessayer.</li></ul><div class=\"cadre\">Tu peux revenir en arrière (« ← Retour »), relire un chapitre (« Chapitres ») et activer le « Mode DYS » pour une lecture plus aérée.</div></div>"
+},
+{
+"type": "info",
+"t": "<div class=\"savoir\"><h3>Bon à savoir : comment lire un extrait</h3>Dans un livre, tout n'est pas écrit par l'auteur. Le titre, le nom de l'auteur, les notes, les résumés, les illustrations forment le <b>paratexte</b> : ce qui entoure le texte sans en faire partie.<ul><li>Le texte de George Sand est écrit en caractères <b>droits</b>.</li><li>Un <b>résumé</b> est écrit en <i>italique</i> (caractères penchés). Il raconte ce qu'on a sauté, mais il n'est pas de l'auteur.</li><li><b>[...]</b> montre qu'une partie du texte a été coupée.</li><li>Un mot <span class=\"mot\" data-d=\"Voilà : la note du mot s'affiche ici.\">souligné en pointillés</span> a une note : touche-le.</li></ul><div class=\"extrait\" style=\"margin-top:10px\"><small>Exemple : George Sand, La Petite Fadette, chapitre I</small><p class=\"rsm\">Ceci est un résumé : il n'est pas de l'auteur.</p>Ceci est le texte de l'auteur, en caractères droits. [...]</div></div>"
+},
+{
 "type": "texte",
 "ref": "A",
-"album": "album_01_la_cosse",
-"savoir": true
+"album": "album_01_la_cosse"
 },
 {
 "type": "qcm",

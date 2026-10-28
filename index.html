@@ -69,7 +69,8 @@ const el=(h,c)=>{const d=document.createElement('div');if(c)d.className=c;d.inne
 function btn(txt,fn,alt){const b=document.createElement('button');b.className='btn'+(alt?' alt':'');b.textContent=txt;b.onclick=fn;return b}
 let ep,si,cur;
 /* ---------- décor et sprites à l'échelle (sprites_meta : adulte de 172 cm = 80 % de la hauteur) ---------- */
-function drawStage(sc){S.innerHTML='';S.style.backgroundImage='';const on=sc&&(sc.sprites||sc.decor||sc.album);S.className=on?'on':'';if(on)S.style.height=Math.round(S.clientWidth*.5625)+'px';if(!on)return;
+function drawStage(sc){S.innerHTML='';S.style.backgroundImage='';const on=sc&&(sc.sprites||sc.decor||sc.album||sc.ui);S.className=on?'on':'';if(on)S.style.height=Math.round(S.clientWidth*.5625)+'px';if(!on)return;
+ if(sc.ui){S.appendChild(img(sc.ui,'full','ui'));return}
  if(sc.decor){const d=img(sc.decor,'full','decors');S.appendChild(d)}
  if(sc.album){S.appendChild(img(sc.album,'full','album'));return}
  const W=S.clientWidth,H=S.clientHeight,ppc=H*.8/172;
@@ -78,12 +79,12 @@ function drawStage(sc){S.innerHTML='';S.style.backgroundImage='';const on=sc&&(s
   if(s.flip){cx=w-cx;i.style.transform='scaleX(-1)'}
   const X=(s.x!=null?s.x:s.side==='right'?76:s.side==='center'?50:24)/100*W;
   i.style.cssText+=`;height:${h}px;width:${w}px;left:${X-cx}px;bottom:${bot+H*.03}px`;S.appendChild(i)})}
-const isQ=sc=>['resume','texte','album','defaite'].indexOf(sc.type)<0;
-function vis(sc){if(sc.decor||sc.sprites||sc.album)return sc;for(let k=si-1;k>=0;k--){const x=ep.scenes[k];if(x.ref===sc.ref&&(x.decor||x.sprites||x.album))return x}return null}
+const isQ=sc=>['resume','texte','album','defaite','info'].indexOf(sc.type)<0;
+function vis(sc){if(sc.decor||sc.sprites||sc.album)return sc;for(let k=si-1;k>=0;k--){const x=ep.scenes[k];if(x.ref===sc.ref&&(x.decor||x.sprites||x.album||x.ui))return x}return null}
 const redraw=()=>{if(cur&&ep)drawStage(isQ(cur)?vis(cur):cur);else{const a=$('#accueil');if(a)a.style.height=Math.round(a.clientWidth*.5625)+'px'}};
 window.addEventListener('resize',redraw);
 const fmt=t=>t.replace(/\{\{([\s\S]+?)\}\}/g,'<p class="rsm">$1</p>').replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,(m,a,b)=>'<span class="mot" data-d="'+b.replace(/"/g,'&quot;')+'">'+a+'</span>');
-document.addEventListener('click',e=>{const m=e.target.closest&&e.target.closest('.mot');if(!m)return;const b=m.closest('.extrait');let n=b.querySelector('.note');if(!n){n=document.createElement('div');n.className='note';b.appendChild(n)}n.innerHTML='<b>'+m.textContent+'</b> : '+m.dataset.d});
+document.addEventListener('click',e=>{const m=e.target.closest&&e.target.closest('.mot');if(!m)return;const b=m.closest('.extrait,.savoir');let n=b.querySelector('.note');if(!n){n=document.createElement('div');n.className='note';b.appendChild(n)}n.innerHTML='<b>'+m.textContent+'</b> : '+m.dataset.d});
 function dys(v){save.dys=!!v;document.body.classList.toggle('dys',!!v);$('#dysb').setAttribute('aria-pressed',!!v);store();redraw()}
 /* ---------- accueil ---------- */
 function home(){cur=null;$('#back').style.display='none';drawStage(null);W.className='read';T.innerHTML='';$('#prog').textContent='';$('#ttl').textContent='La Petite Fadette';
@@ -101,11 +102,12 @@ function start(e,pos){ep=e;si=pos||0;if(!ep.seul){save.jet=save.jet||{};if(pos==
 function go(){const sc=ep.scenes[si];if(!sc)return bilan();cur=sc;
  if(!ep.seul){save.pos=save.pos||{};save.pos[ep.id]=Math.max(save.pos[ep.id]||0,si);store()}
  $('#prog').textContent=`${si+1} / ${ep.scenes.length}`+(ep.tuto?' · tuto':'');$('#back').style.display=(!ep.seul&&si>0)?'':'none';const q=isQ(sc);W.className=q?'quiz':'read';drawStage(q?vis(sc):sc);P.innerHTML='';T.innerHTML='';window.scrollTo(0,0);
- ({resume:rResume,texte:rTexte,album:rAlbum,defaite:rDefaite}[sc.type]||rQ)(sc)}
+ ({resume:rResume,texte:rTexte,album:rAlbum,defaite:rDefaite,info:rInfo}[sc.type]||rQ)(sc)}
 const next=()=>{si++;go()};
 const box=x=>`<div class="extrait"><small>${x.src}</small>${fmt(x.t)}</div>`;
 function rResume(sc){P.innerHTML=`<p class="rsm">${sc.t}</p>`;P.appendChild(btn('Continuer',next))}
 const SAVOIR=`<div class="savoir"><h3>Bon à savoir : comment lire un extrait</h3>Dans un livre, tout n'est pas écrit par l'auteur. Le titre, le nom de l'auteur, les notes, les résumés, les illustrations forment le <b>paratexte</b> : ce qui entoure le texte sans en faire partie.<ul><li>Le texte de George Sand est écrit en caractères <b>droits</b>.</li><li>Un <b>résumé</b> est écrit en <i>italique</i> (caractères penchés). Il raconte ce qu'on a sauté, mais il n'est pas de l'auteur.</li><li><b>[...]</b> montre qu'une partie du texte a été coupée.</li><li>Un mot <span class="mot" data-d="Touche un mot souligné : sa note apparaît.">souligné en pointillés</span> a une note : touche-le.</li></ul></div>`;
+function rInfo(sc){P.innerHTML=sc.t;P.appendChild(btn(ep.scenes[si+1]&&ep.scenes[si+1].type==='info'?'Suite':'Commencer la lecture',next))}
 function rTexte(sc){const n=ep.scenes[si+1];P.innerHTML=(sc.savoir?SAVOIR:'')+box(ep.extraits[sc.ref]);P.appendChild(btn(n&&isQ(n)?"J'ai lu : aux questions":'Continuer',next))}
 function rAlbum(sc){const x=sc.ref?ep.extraits[sc.ref]:sc;P.innerHTML=`<div class="extrait cap"><small>${x.src}</small>${fmt(x.t)}</div>`;P.appendChild(btn('Continuer',next))}
 /* ---------- fin perdue : image + texte du jeu, puis reprise au dernier texte lu ---------- */
