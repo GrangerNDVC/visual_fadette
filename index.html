@@ -47,15 +47,21 @@ body.dys #wrap.quiz{display:block;height:auto;overflow:visible}body.dys #wrap.qu
 body.dys .rsm{font-style:normal;background:#eef1f5;border-left-color:#8da2b8;padding:6px 12px}body.dys .rsm::before{content:"Résumé : ";font-weight:600}
 body.dys .extrait,body.dys .savoir,body.dys .resume,body.dys .perdu{font-size:1.15rem;line-height:2.05;max-width:70ch;text-align:left}
 body.dys .opt{line-height:1.8;padding:14px}
+input[type=tel]{font:inherit;padding:10px;border:2px solid #c9b48f;border-radius:8px;width:9em;letter-spacing:.3em;text-align:center;font-size:1.4rem}
+.msg{color:var(--ko);font-family:Arial,sans-serif;margin-top:10px;min-height:1.2em}.sub{font-family:Arial,sans-serif;font-size:.95rem;color:#5a4f44;line-height:1.5}
+body.gate .hr,body.gate #back{display:none!important}
+#pied{display:flex;justify-content:space-between;align-items:center;padding:6px 14px;font:.72rem Arial,sans-serif;color:#7a6a58}
+#eng{background:none;border:0;color:#2b2118;opacity:.12;font-size:15px;padding:4px 8px;cursor:pointer}#eng:hover,#eng:focus{opacity:.55}
 </style></head><body><div id="app">
 <header><span class="hl"><button id="back" style="display:none" onclick="back()">← Retour</button><span id="ttl">La Petite Fadette</span></span><span class="hr"><span id="prog"></span><button onclick="menu()">Chapitres</button><button id="dysb" aria-pressed="false" onclick="dys(!save.dys)">Mode DYS</button></span></header>
 <div id="rot" onclick="this.style.display='none'">📱 Pour plus de confort, tourne ton téléphone en mode paysage (touche ici pour fermer). Tu peux toujours faire défiler l'écran.</div>
-<div id="wrap" class="read"><section id="left"><div id="stage"></div><div id="txt"></div></section><main id="right"><div id="panel"></div></main></div></div>
-<script src="data/episodes.js"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
+<div id="wrap" class="read"><section id="left"><div id="stage"></div><div id="txt"></div></section><main id="right"><div id="panel"></div></main></div>
+<footer id="pied"><span><span id="ver">Version du 29/10, 11 h</span> <span id="cpt"></span></span><button id="eng" aria-label="Espace enseignante" onclick="window.VCT_PROF_OUVRIR&&VCT_PROF_OUVRIR()">⚙</button></footer></div>
+<script src="data/episodes.js"></script><script src="js/compte.js?v=20261029a"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
 <script>
 const $=s=>document.querySelector(s),P=$('#panel'),S=$('#stage'),T=$('#txt'),W=$('#wrap');
-const KEY='vct_save_v1';let save=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}})();
-const store=()=>{try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}if(window.VCT_SYNC)try{VCT_SYNC(save)}catch(e){}};
+let KEY='vct_save_v1';let save=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}})();
+const store=()=>{if(window.VCT_ESSAI_ON||!KEY)return;try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}if(window.VCT_SYNC)try{VCT_SYNC(save)}catch(e){}};
 const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
 const COMP={prelever:'Prélever une information',reformuler:'Reformuler, comprendre un mot',inferer:'Comprendre ce qui n\'est pas dit',justifier:'Justifier avec le texte',point:'Comprendre le choix de l\'auteur'};
 const ERR={hors:"Cette idée n'est pas dans l'extrait. Relis-le : peux-tu montrer où c'est écrit ?",contresens:"Attention : ce que tu proposes dit presque le contraire du texte.",sur:"C'est aller trop loin : le texte ne dit pas cela.",sous:"C'est vrai, mais incomplet : il manque une partie de la réponse.",vraihq:"C'est écrit dans le texte, mais cela ne répond pas à la question posée.",litteral:"Tu as lu l'image au sens propre. Ici, l'auteur fait une comparaison.",gaucheDroite:"Tu as peut-être confondu la gauche du garçon et la gauche de l'écran.",ailleurs:"Ce morceau ne répond pas à la question.",saisie:"Ce n'est pas le bon mot. Relis la phrase."};
@@ -91,14 +97,14 @@ function home(){cur=null;$('#back').style.display='none';drawStage(null);W.class
  P.innerHTML='';const a=el('','');a.id='accueil';a.style.backgroundImage="url('assets/ui/ecran_accueil.jpg')";
  const n=el('<h1>La Petite Fadette</h1><div>Lire et comprendre un roman de George Sand</div>');n.className='in';a.appendChild(n);P.appendChild(a);a.style.height=Math.round(a.clientWidth*.5625)+'px';
  const L=el(''),cur1=EPISODES.find(e=>!(save.done&&save.done[e.id]))||EPISODES[EPISODES.length-1],p1=(save.pos||{})[cur1.id]||0;
- L.appendChild(btn(p1?'Continuer l\'histoire':'Commencer',()=>start(cur1,p1)));L.appendChild(btn('Choisir un chapitre',menu,1));
+ L.appendChild(btn(p1?'Continuer l\'histoire':'Commencer',()=>start(cur1,p1)));L.appendChild(btn('Choisir un chapitre',menu,1));if(window.VCT_COMPTE&&!window.VCT_ESSAI_ON)L.appendChild(btn("Changer d'élève",VCT_COMPTE.changer,1));
  const v=Object.keys(save.def||{}).length;if(v)L.appendChild(el(`<p><small>Fins perdues découvertes : ${v} / ${Object.keys(DEFAITES).length}</small></p>`));P.appendChild(L)}
 function menu(){cur=null;ep=null;drawStage(null);W.className='read';T.innerHTML='';$('#back').style.display='none';$('#prog').textContent='';P.innerHTML='<h2>Choisis un chapitre</h2>';
  EPISODES.forEach(e=>{const d=save.done&&save.done[e.id],pos=(save.pos||{})[e.id]||0,c=el(`<b>${e.titre}</b><br><small>${e.chap||''}${d?' · terminé ✓':pos?' · en cours':''}</small>`,'extrait');
   if(pos&&!d)c.appendChild(btn('Reprendre',()=>start(e,pos)));c.appendChild(btn(d?'Relire l\'histoire':'Commencer',()=>start(e,0),pos&&!d));P.appendChild(c)});
- P.appendChild(btn('← Accueil',home,1))}
+ P.appendChild(btn('← Accueil',home,1));if(window.VCT_COMPTE&&!window.VCT_ESSAI_ON)P.appendChild(btn("Changer d'élève",VCT_COMPTE.changer,1))}
 function back(){if(ep&&si>0){si--;go()}else menu()}
-function start(e,pos){ep=e;si=pos||0;if(!ep.seul){save.jet=save.jet||{};if(pos===0&&!(save.done&&save.done[ep.id]))save.jet[ep.id]=0}go()}
+function start(e,pos){if(window.VCT_ESSAI_ON&&window.VCT_ABREGER&&!e.seul){e=VCT_ABREGER(e);pos=0}ep=e;si=pos||0;if(!ep.seul){save.jet=save.jet||{};if(pos===0&&!(save.done&&save.done[ep.id])){if(window.VCT_RAZ)VCT_RAZ('jet:'+ep.id);save.jet[ep.id]=0}}go()}
 function go(){const sc=ep.scenes[si];if(!sc)return bilan();cur=sc;
  if(!ep.seul){save.pos=save.pos||{};save.pos[ep.id]=Math.max(save.pos[ep.id]||0,si);store()}
  $('#prog').textContent=`${si+1} / ${ep.scenes.length}`+(ep.tuto?' · tuto':'');$('#back').style.display=(!ep.seul&&si>0)?'':'none';const q=isQ(sc);W.className=q?'quiz':'read';drawStage(q?vis(sc):sc);P.innerHTML='';T.innerHTML='';window.scrollTo(0,0);
@@ -113,7 +119,7 @@ function rAlbum(sc){const x=sc.ref?ep.extraits[sc.ref]:sc;P.innerHTML=`<div clas
 /* ---------- fin perdue : image + texte du jeu, puis reprise au dernier texte lu ---------- */
 function rDefaite(sc){const d=DEFAITES[sc.id];S.innerHTML='';S.className='on';S.appendChild(img(d.img,'full','defaites'));
  P.innerHTML=`<div class="perdu"><small>Fin perdue – ${d.titre}</small>${d.t}</div>`;
- P.appendChild(btn('Reprendre la lecture',()=>{ep.scenes.forEach((s,n)=>{if(n>=sc.retour&&s.id)delete save.res[ep.id+':'+s.id]});store();si=sc.retour;go()}))}
+ P.appendChild(btn('Reprendre la lecture',()=>{ep.scenes.forEach((s,n)=>{if(n>=sc.retour&&s.id){if(window.VCT_RAZ)VCT_RAZ('res:'+ep.id+':'+s.id);delete save.res[ep.id+':'+s.id]}});store();si=sc.retour;go()}))}
 function perdre(id){save.def=save.def||{};save.def[id]=1;store();let k=si;while(k>0&&ep.scenes[k].type!=='texte')k--;rDefaite({id:id,retour:k})}
 /* ---------- questions ---------- */
 function review(sc,R){if(sc.type!=='clic')T.innerHTML=box(ep.extraits[sc.ref]);
@@ -125,7 +131,7 @@ function review(sc,R){if(sc.type!=='clic')T.innerHTML=box(ep.extraits[sc.ref]);
  if(sc.type==='image')sc.o.filter(o=>o.ok).forEach(o=>{const w=el('','opt good '+(sc.crop?'face':''));w.appendChild(img(o.img,o.flip?'flip':''));P.appendChild(w)});
  P.insertAdjacentHTML('beforeend',`<div class="fb good">${sc.expl}</div>`);P.appendChild(btn('Continuer',next))}
 function rQ(sc,redo){const id=ep.id+':'+sc.id,r=save.res=save.res||{};r[id]=r[id]||{c:sc.comp,t:0,h:0,e:[]};const R=r[id];
- if(R.done&&!redo)return review(sc,R);if(redo){R.t=0;R.e=[];R.done=0;P.innerHTML='';T.innerHTML=''}
+ if(R.done&&!redo)return review(sc,R);if(redo){if(window.VCT_RAZ)VCT_RAZ('res:'+id);R.t=0;R.e=[];R.done=0;P.innerHTML='';T.innerHTML=''}
  const tuto=ep.tuto||ep.seul,jet=()=>MAXJ-((save.jet||{})[ep.id]||0);
  if(sc.type!=='clic')T.innerHTML=box(ep.extraits[sc.ref]);
  P.insertAdjacentHTML('beforeend',`<div class="comp">${COMP[sc.comp]}</div><h2>${sc.q}</h2>`);
@@ -152,8 +158,17 @@ function bilan(){drawStage(null);if(ep.seul){ep=ep.orig;return home()}
  P.innerHTML='<h1>Épisode terminé !</h1><p>Réussites du premier coup, sans coup de pouce :</p>'+Object.keys(by).map(c=>`<div>${COMP[c]} : ${by[c][0]} / ${by[c][1]}<div class="bar"><i style="width:${by[c][0]/by[c][1]*100}%"></i></div></div>`).join('');
  const dur=ks.filter(k=>save.res[k].h3);
  if(dur.length){P.insertAdjacentHTML('beforeend',`<p>Pour ${dur.length} question${dur.length>1?'s':''}, tu as eu besoin du dernier indice de Sauteriot. Tu veux les refaire seul ?</p>`);
-  P.appendChild(btn('Refaire seul',()=>{const sc=[];dur.forEach(k=>{save.res[k].done=0;const q=ep.scenes.find(s=>ep.id+':'+s.id===k);if(!q)return;const t=ep.scenes.find(s=>s.type==='texte'&&s.ref===q.ref);if(t&&!sc.includes(t))sc.push(t);sc.push(q)});
+  P.appendChild(btn('Refaire seul',()=>{const sc=[];dur.forEach(k=>{if(window.VCT_RAZ)VCT_RAZ('res:'+k);save.res[k].done=0;const q=ep.scenes.find(s=>ep.id+':'+s.id===k);if(!q)return;const t=ep.scenes.find(s=>s.type==='texte'&&s.ref===q.ref);if(t&&!sc.includes(t))sc.push(t);sc.push(q)});
    ep={...ep,seul:1,orig:ep,scenes:sc};start(ep,0)}))}
  P.appendChild(btn('Choisir un chapitre',menu,1))}
-dys(!!save.dys);home();
+/* ---------- points d'accroche pour js/compte.js et js/prof.js ---------- */
+window.VCT_APP={getSave:()=>save,
+ setSave:(k,o)=>{KEY=k;save=o||{};document.body.classList.toggle('dys',!!save.dys);$('#dysb').setAttribute('aria-pressed',!!save.dys)},
+ vide:()=>{cur=null;ep=null;drawStage(null);W.className='read';T.innerHTML='';P.innerHTML='';$('#prog').textContent='';$('#back').style.display='none';$('#ttl').textContent='La Petite Fadette'},
+ home:home,menu:menu,btn:btn,isQ:isQ,start:start,redraw:redraw,
+ ep:()=>ep,si:()=>si,cur:()=>cur,episodes:()=>EPISODES,
+ aller:i=>{si=i;go()},
+ fin:()=>{if(!ep)start(EPISODES[0],0);si=ep.scenes.length;go()},
+ defaite:id=>{if(!ep)start(EPISODES[0],0);let k=Math.min(si,ep.scenes.length-1);while(k>0&&ep.scenes[k].type!=='texte')k--;rDefaite({id:id,retour:k})}};
+if(window.VCT_COMPTE)VCT_COMPTE.demarrer();else{dys(!!save.dys);home()}
 </script></body></html>
