@@ -49,15 +49,35 @@ body.dys .extrait,body.dys .savoir,body.dys .resume,body.dys .perdu{font-size:1.
 body.dys .opt{line-height:1.8;padding:14px}
 input[type=tel]{font:inherit;padding:10px;border:2px solid #c9b48f;border-radius:8px;width:9em;letter-spacing:.3em;text-align:center;font-size:1.4rem}
 .msg{color:var(--ko);font-family:Arial,sans-serif;margin-top:10px;min-height:1.2em}.sub{font-family:Arial,sans-serif;font-size:.95rem;color:#5a4f44;line-height:1.5}
-body.gate .hr,body.gate #back{display:none!important}
+body.gate .hr,body.gate #back,body.gate #ttl{display:none!important}
+.gw{max-width:880px;margin:0 auto;padding:10px 6px 24px}
+.gw-top{display:flex;align-items:flex-end;justify-content:center;gap:clamp(8px,3vw,36px);border-bottom:3px double #c9b48f;padding-bottom:0;margin-bottom:26px}
+.gw-tw{height:clamp(84px,17vh,150px);width:auto;flex:none;display:block}
+.gw-title{text-align:center;padding:0 0 14px;min-width:0}.gw-title h1{margin:2px 0;font-size:clamp(1.7rem,6vw,3.1rem);line-height:1.1;color:var(--acc);letter-spacing:.02em;text-shadow:0 2px 0 #fff9}
+.gw-title small{display:block;font:italic clamp(.8rem,2.2vw,1rem) Georgia,serif;color:#7a6a58}
+.gw-main{display:flex;align-items:center;justify-content:center;gap:clamp(16px,4vw,48px);flex-wrap:wrap}
+.gw-fad{flex:0 1 300px;display:flex;flex-direction:column;align-items:center;min-width:170px}
+.gw-fad img{height:clamp(190px,36vh,330px);width:auto;max-width:100%;display:block}
+.gw-bulle{position:relative;background:#fff;border:3px solid var(--acc);border-radius:20px;padding:12px 16px;margin:0 0 18px;font:italic 1.15rem/1.4 Georgia,serif;text-align:center;color:var(--ink);min-width:200px}
+.gw-bulle::after{content:"";position:absolute;left:50%;bottom:-17px;margin-left:-14px;border:14px solid transparent;border-top-color:var(--acc);border-bottom:0}
+.gw-bulle::before{content:"";position:absolute;left:50%;bottom:-11px;margin-left:-11px;border:11px solid transparent;border-top-color:#fff;border-bottom:0;z-index:1}
+.gw-bulle.err{background:#fbe3dc;border-color:var(--ko);color:#7d2a1d}.gw-bulle.err::before{border-top-color:#fbe3dc}.gw-bulle.err::after{border-top-color:var(--ko)}
+.gw-form{flex:1 1 320px;max-width:440px;background:#fffaf0;border:2px solid #e0d2ae;border-radius:18px;padding:26px 26px 22px;box-shadow:0 3px 12px #0002;text-align:center}
+.gw-form label{display:block;font:600 1.15rem Georgia,serif;color:var(--acc);margin-bottom:12px}
+.gw-form input[type=tel]{width:100%;max-width:12em;font-size:2.4rem;padding:14px 10px;border-radius:14px;border-width:3px}
+.gw-form .btn{display:block;width:100%;margin:16px 0 0;padding:16px 18px;font-size:1.15rem;border-radius:14px}
+.gw-form .btn.alt{border-width:2px}.gw-form .btn.lien{background:none;border:0;color:#7a6a58;text-decoration:underline;font-size:1rem;padding:10px}
+.gw-aide{font:.9rem/1.5 Arial,sans-serif;color:#6b5d4f;margin:18px 0 0}
+@media (max-width:640px){.gw-tw{height:64px}.gw-top{gap:6px}.gw-title h1{font-size:1.55rem}.gw-title small{font-size:.75rem}.gw-main{flex-direction:column}.gw-fad{flex-basis:auto}.gw-fad img{height:clamp(130px,24vh,200px)}.gw-form{padding:20px 16px}}
 #pied{display:flex;justify-content:space-between;align-items:center;padding:6px 14px;font:.72rem Arial,sans-serif;color:#7a6a58}
 #eng{background:none;border:0;color:#2b2118;opacity:.12;font-size:15px;padding:4px 8px;cursor:pointer}#eng:hover,#eng:focus{opacity:.55}
+@media (max-height:520px){.gw-tw{height:60px}.gw-title h1{font-size:1.6rem}.gw-top{margin-bottom:12px}.gw-fad img{height:140px}.gw-bulle{margin-bottom:12px;padding:8px 12px}.gw-form{padding:14px 18px}.gw-form input[type=tel]{font-size:1.8rem;padding:8px}.gw-form .btn{padding:10px;margin-top:8px}.gw-aide{display:none}.gw-form label{margin-bottom:6px}}
 </style></head><body><div id="app">
 <header><span class="hl"><button id="back" style="display:none" onclick="back()">← Retour</button><span id="ttl">La Petite Fadette</span></span><span class="hr"><span id="prog"></span><button onclick="menu()">Chapitres</button><button id="dysb" aria-pressed="false" onclick="dys(!save.dys)">Mode DYS</button></span></header>
 <div id="rot" onclick="this.style.display='none'">📱 Pour plus de confort, tourne ton téléphone en mode paysage (touche ici pour fermer). Tu peux toujours faire défiler l'écran.</div>
 <div id="wrap" class="read"><section id="left"><div id="stage"></div><div id="txt"></div></section><main id="right"><div id="panel"></div></main></div>
-<footer id="pied"><span><span id="ver">Version du 29/10, 11 h</span> <span id="cpt"></span></span><button id="eng" aria-label="Espace enseignante" onclick="window.VCT_PROF_OUVRIR&&VCT_PROF_OUVRIR()">⚙</button></footer></div>
-<script src="data/episodes.js"></script><script src="js/compte.js?v=20261029a"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
+<footer id="pied"><span><span id="ver">Version du 30/10, 07 h</span> <span id="cpt"></span></span><button id="eng" aria-label="Espace enseignante" onclick="window.VCT_PROF_OUVRIR&&VCT_PROF_OUVRIR()">⚙</button></footer></div>
+<script src="data/episodes.js"></script><script src="js/compte.js?v=20261029b"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
 <script>
 const $=s=>document.querySelector(s),P=$('#panel'),S=$('#stage'),T=$('#txt'),W=$('#wrap');
 let KEY='vct_save_v1';let save=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}})();
@@ -165,7 +185,7 @@ function bilan(){drawStage(null);if(ep.seul){ep=ep.orig;return home()}
 window.VCT_APP={getSave:()=>save,
  setSave:(k,o)=>{KEY=k;save=o||{};document.body.classList.toggle('dys',!!save.dys);$('#dysb').setAttribute('aria-pressed',!!save.dys)},
  vide:()=>{cur=null;ep=null;drawStage(null);W.className='read';T.innerHTML='';P.innerHTML='';$('#prog').textContent='';$('#back').style.display='none';$('#ttl').textContent='La Petite Fadette'},
- home:home,menu:menu,btn:btn,isQ:isQ,start:start,redraw:redraw,
+ home:home,menu:menu,btn:btn,img:img,isQ:isQ,start:start,redraw:redraw,
  ep:()=>ep,si:()=>si,cur:()=>cur,episodes:()=>EPISODES,
  aller:i=>{si=i;go()},
  fin:()=>{if(!ep)start(EPISODES[0],0);si=ep.scenes.length;go()},

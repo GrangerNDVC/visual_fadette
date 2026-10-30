@@ -17,7 +17,7 @@ var CFG = {
 var CHEMIN = 'jeux/visualfadette';
 var CLE = 'vct_save_v1';                         // sans compte ; avec compte : CLE + ':' + numéro
 var SDK = 'https://www.gstatic.com/firebasejs/8.10.1/';
-var VER = '20261029a';
+var VER = '20261029b';
 
 var etat = { num: null, pause: false, hors: false };
 var fb = null, dirty = false, tFirst = 0, tPlan = null, tRetry = null, envoi = false, echecs = 0;
@@ -217,25 +217,40 @@ function majPied() {
 }
 
 /* ---------- écran du numéro ---------- */
-function msg(t) { var m = q('#cptMsg'); if (m) m.textContent = t || ''; }
+var DEFAUT = 'Alors, c\u2019est quoi ton num\u00e9ro ?';
+function msg(t) {
+  var m = q('#cptMsg'); if (!m) return;
+  m.textContent = t || DEFAUT; m.className = 'gw-bulle' + (t && t !== '\u2026' && t.indexOf('Un instant') !== 0 ? ' err' : '');
+}
 function occupe(b) { var l = document.querySelectorAll('#cptBtns button'); for (var i = 0; i < l.length; i++) l[i].disabled = b; }
 function ecran() {
   var A = window.VCT_APP;
   A.setSave(null, {}); A.vide(); document.body.classList.add('gate'); majPied();
   var P = q('#panel');
-  P.innerHTML = '<h2>Ton numéro</h2><p class="sub">Choisis un numéro à 4 chiffres et retiens-le : il sert à retrouver ta partie. Pas besoin de nom.</p>';
+  var fad = ['taquine', 'moqueuse', 'rieuse'][Math.floor(Math.random() * 3)];
+  P.innerHTML =
+    '<div class="gw">' +
+      '<div class="gw-top"><span id="gwL"></span><div class="gw-title"><small>Lire et comprendre</small><h1>La Petite Fadette</h1><small>George Sand \u00b7 1849</small></div><span id="gwR"></span></div>' +
+      '<div class="gw-main">' +
+        '<div class="gw-fad"><p id="cptMsg" class="gw-bulle" role="alert"></p><span id="gwF"></span></div>' +
+        '<div class="gw-form"><label for="cptNum">Mon num\u00e9ro \u00e0 4 chiffres</label><div id="gwI"></div><div id="cptBtns"></div>' +
+        '<p class="gw-aide">Choisis 4 chiffres et retiens-les : ils servent \u00e0 retrouver ta partie. Pas besoin de nom.</p></div>' +
+      '</div>' +
+    '</div>';
+  q('#gwL').appendChild(A.img('sylvinet_14_triste_sourire_timide', 'gw-tw', 'portraits/sylvinet'));
+  q('#gwR').appendChild(A.img('landry_14_priche_joyeux', 'gw-tw', 'portraits/landry'));
+  q('#gwF').appendChild(A.img('fadette_14_guenilles_' + fad, '', 'portraits/fadette'));
   var inp = document.createElement('input');
   inp.type = 'tel'; inp.id = 'cptNum'; inp.maxLength = 4; inp.autocomplete = 'off'; inp.placeholder = '0000';
-  inp.setAttribute('inputmode', 'numeric'); inp.setAttribute('pattern', '[0-9]*'); inp.setAttribute('aria-label', 'Numéro à 4 chiffres');
+  inp.setAttribute('inputmode', 'numeric'); inp.setAttribute('pattern', '[0-9]*');
   inp.oninput = function () { inp.value = inp.value.replace(/[^0-9]/g, '').slice(0, 4); msg(''); };
   inp.onkeydown = function (e) { if (e.key === 'Enter') valider('reprendre'); };
-  P.appendChild(inp);
-  var d = document.createElement('div'); d.id = 'cptBtns';
+  q('#gwI').appendChild(inp);
+  var d = q('#cptBtns');
   d.appendChild(A.btn('Reprendre ma partie', function () { valider('reprendre'); }));
   d.appendChild(A.btn('Nouvelle partie', function () { valider('nouvelle'); }, 1));
-  d.appendChild(A.btn('Jouer sans compte', sansCompte, 1));
-  P.appendChild(d);
-  var m = document.createElement('p'); m.id = 'cptMsg'; m.className = 'msg'; m.setAttribute('role', 'alert'); P.appendChild(m);
+  var s = A.btn('Jouer sans compte', sansCompte, 1); s.className += ' lien'; d.appendChild(s);
+  msg('');
 }
 function entrerJeu(num, save, cle) {
   etat.num = num; etat.pause = false;
