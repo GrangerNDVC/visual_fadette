@@ -17,7 +17,7 @@ var CFG = {
 var CHEMIN = 'jeux/visualfadette';
 var CLE = 'vct_save_v1';                         // sans compte ; avec compte : CLE + ':' + numéro
 var SDK = 'https://www.gstatic.com/firebasejs/8.10.1/';
-var VER = '20261029b';
+var VER = '20261030a';
 
 var etat = { num: null, pause: false, hors: false };
 var fb = null, dirty = false, tFirst = 0, tPlan = null, tRetry = null, envoi = false, echecs = 0;
@@ -217,6 +217,22 @@ function majPied() {
 }
 
 /* ---------- écran du numéro ---------- */
+var EXTI = ['png', 'jpg', 'jpeg', 'jfif', 'webp'];
+/* essaie chaque image de la liste (portrait d'abord, sinon personnage en pied) ; si aucune n'existe, on n'affiche rien */
+function image(cands, cls, cible) {
+  var i = 0;
+  (function essai() {
+    if (i >= cands.length) return;
+    var c = cands[i], k = 0, im = new Image();
+    im.className = (cls || '') + (c[2] ? ' ' + c[2] : '');
+    im.onload = function () { cible.appendChild(im); };
+    im.onerror = function () {
+      if (++k < EXTI.length) im.src = 'assets/' + c[0] + '/' + c[1] + '.' + EXTI[k];
+      else { i++; essai(); }
+    };
+    im.src = 'assets/' + c[0] + '/' + c[1] + '.' + EXTI[0];
+  })();
+}
 var DEFAUT = 'Alors, c\u2019est quoi ton num\u00e9ro ?';
 function msg(t) {
   var m = q('#cptMsg'); if (!m) return;
@@ -237,9 +253,9 @@ function ecran() {
         '<p class="gw-aide">Choisis 4 chiffres et retiens-les : ils servent \u00e0 retrouver ta partie. Pas besoin de nom.</p></div>' +
       '</div>' +
     '</div>';
-  q('#gwL').appendChild(A.img('sylvinet_14_triste_sourire_timide', 'gw-tw', 'portraits/sylvinet'));
-  q('#gwR').appendChild(A.img('landry_14_priche_joyeux', 'gw-tw', 'portraits/landry'));
-  q('#gwF').appendChild(A.img('fadette_14_guenilles_' + fad, '', 'portraits/fadette'));
+  image([['portraits/sylvinet', 'sylvinet_14_triste_sourire_timide'], ['sprites/sylvinet', 'sylvinet_14_triste', 'sp']], 'gw-tw', q('#gwL'));
+  image([['portraits/landry', 'landry_14_priche_joyeux'], ['sprites/landry', 'landry_14_priche', 'sp']], 'gw-tw', q('#gwR'));
+  image([['portraits/fadette', 'fadette_14_guenilles_' + fad], ['sprites/fadette', 'fadette_14_guenilles', 'sp']], '', q('#gwF'));
   var inp = document.createElement('input');
   inp.type = 'tel'; inp.id = 'cptNum'; inp.maxLength = 4; inp.autocomplete = 'off'; inp.placeholder = '0000';
   inp.setAttribute('inputmode', 'numeric'); inp.setAttribute('pattern', '[0-9]*');

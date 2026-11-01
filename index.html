@@ -56,6 +56,7 @@ body.gate .hr,body.gate #back,body.gate #ttl{display:none!important}
 .gw-title{text-align:center;padding:0 0 14px;min-width:0}.gw-title h1{margin:2px 0;font-size:clamp(1.7rem,6vw,3.1rem);line-height:1.1;color:var(--acc);letter-spacing:.02em;text-shadow:0 2px 0 #fff9}
 .gw-title small{display:block;font:italic clamp(.8rem,2.2vw,1rem) Georgia,serif;color:#7a6a58}
 .gw-main{display:flex;align-items:center;justify-content:center;gap:clamp(16px,4vw,48px);flex-wrap:wrap}
+.gw-tw.sp{width:clamp(70px,12vh,110px);object-fit:cover;object-position:top}
 .gw-fad{flex:0 1 300px;display:flex;flex-direction:column;align-items:center;min-width:170px}
 .gw-fad img{height:clamp(190px,36vh,330px);width:auto;max-width:100%;display:block}
 .gw-bulle{position:relative;background:#fff;border:3px solid var(--acc);border-radius:20px;padding:12px 16px;margin:0 0 18px;font:italic 1.15rem/1.4 Georgia,serif;text-align:center;color:var(--ink);min-width:200px}
@@ -76,8 +77,8 @@ body.gate .hr,body.gate #back,body.gate #ttl{display:none!important}
 <header><span class="hl"><button id="back" style="display:none" onclick="back()">← Retour</button><span id="ttl">La Petite Fadette</span></span><span class="hr"><span id="prog"></span><button onclick="menu()">Chapitres</button><button id="dysb" aria-pressed="false" onclick="dys(!save.dys)">Mode DYS</button></span></header>
 <div id="rot" onclick="this.style.display='none'">📱 Pour plus de confort, tourne ton téléphone en mode paysage (touche ici pour fermer). Tu peux toujours faire défiler l'écran.</div>
 <div id="wrap" class="read"><section id="left"><div id="stage"></div><div id="txt"></div></section><main id="right"><div id="panel"></div></main></div>
-<footer id="pied"><span><span id="ver">Version du 30/10, 07 h</span> <span id="cpt"></span></span><button id="eng" aria-label="Espace enseignante" onclick="window.VCT_PROF_OUVRIR&&VCT_PROF_OUVRIR()">⚙</button></footer></div>
-<script src="data/episodes.js"></script><script src="js/compte.js?v=20261029b"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
+<footer id="pied"><span><span id="ver">Version du 31/10, 07 h</span> <span id="cpt"></span></span><button id="eng" aria-label="Espace enseignante" onclick="window.VCT_PROF_OUVRIR&&VCT_PROF_OUVRIR()">⚙</button></footer></div>
+<script src="data/episodes.js"></script><script src="data/episodes_2_3.js?v=20261031a"></script><script src="js/compte.js?v=20261030a"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
 <script>
 const $=s=>document.querySelector(s),P=$('#panel'),S=$('#stage'),T=$('#txt'),W=$('#wrap');
 let KEY='vct_save_v1';let save=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}})();
