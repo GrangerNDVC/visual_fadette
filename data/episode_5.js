@@ -31,7 +31,7 @@ window.EPISODES.push({
 },
 "G": {
 "src": "George Sand, La Petite Fadette, chapitre IX",
-"t": "Et il sauta dans la coupure et entra dans les broussailles. Son frère n'y était point ; mais, en suivant le fil de l'eau, à dix pas de là, et toujours entendant l'agneau bêler, Landry vit sur l'autre rive son frère assis, avec un petit agneau qu'il tenait dans sa blouse et qui, pour le vrai, était bureau de couleur depuis le bout du nez jusqu'au bout de la queue. Comme Sylvinet était bien vivant et ne paraissait gâté ni déchiré dans sa figure et dans son habillement, Landry fut si aise qu'il commença par remercier le bon Dieu dans son cœur, sans songer à lui demander pardon d'avoir eu recours à la science du diable pour avoir ce bonheur-là."
+"t": "{{Landry a suivi les conseils de la petite Fadette, que l'on croit un peu sorcière.}}Et il sauta dans la coupure et entra dans les broussailles. Son frère n'y était point ; mais, en suivant le fil de l'eau, à dix pas de là, et toujours entendant l'agneau bêler, Landry vit sur l'autre rive son frère assis, avec un petit agneau qu'il tenait dans sa blouse et qui, pour le vrai, était bureau de couleur depuis le bout du nez jusqu'au bout de la queue. Comme Sylvinet était bien vivant et ne paraissait gâté ni déchiré dans sa figure et dans son habillement, Landry fut si aise qu'il commença par remercier le bon Dieu dans son cœur, sans songer à lui demander pardon d'avoir eu recours à la science du diable pour avoir ce bonheur-là."
 },
 "H": {
 "src": "George Sand, La Petite Fadette, chapitre IX",

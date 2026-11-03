@@ -341,31 +341,31 @@ window.EPISODES.push({
 "id": "q9",
 "comp": "reformuler",
 "ref": "F",
-"q": "Qui est « son aîné qui dormait à côté de lui » ?",
+"q": "« Pars sans faire semblant de rien », dit le père. Que demande-t-il à Landry ?",
 "o": [
 {
-"t": "Sylvinet",
+"t": "De partir discrètement, sans laisser voir sa peine.",
 "ok": 1
 },
 {
-"t": "Landry",
+"t": "De rester à la maison.",
 "err": "contresens"
 },
 {
-"t": "Martin, le grand frère",
-"err": "hors"
+"t": "De faire croire à tout le monde qu'il est joyeux.",
+"err": "sur"
 },
 {
-"t": "Le père Barbeau",
+"t": "De réveiller sa mère pour lui dire adieu.",
 "err": "hors"
 }
 ],
 "aide": [
-"Qui dort à côté de Landry dans la chambre ?",
-"Rappelle-toi : lequel des deux bessons est né en premier ?",
-"Sylvinet est né une heure avant Landry."
+"Relis la phrase du père : il parle de « partir ».",
+"Cherche ce que le père veut éviter, dans la phrase qui précède : « épargner les adieux ».",
+"Regarde la réplique entière : le père veut un départ sans bruit, sans pleurs."
 ],
-"expl": "Sylvinet est l'aîné des deux bessons : il est né le premier."
+"expl": "Le père demande à Landry de partir sans bruit et sans laisser voir sa peine, pour éviter des adieux qui feraient pleurer toute la famille."
 },
 {
 "type": "texte",

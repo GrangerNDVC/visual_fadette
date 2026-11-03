@@ -72,13 +72,34 @@ body.gate .hr,body.gate #back,body.gate #ttl{display:none!important}
 @media (max-width:640px){.gw-tw{height:64px}.gw-top{gap:6px}.gw-title h1{font-size:1.55rem}.gw-title small{font-size:.75rem}.gw-main{flex-direction:column}.gw-fad{flex-basis:auto}.gw-fad img{height:clamp(130px,24vh,200px)}.gw-form{padding:20px 16px}}
 #pied{display:flex;justify-content:space-between;align-items:center;padding:6px 14px;font:.72rem Arial,sans-serif;color:#7a6a58}
 #eng{background:none;border:0;color:#2b2118;opacity:.12;font-size:15px;padding:4px 8px;cursor:pointer}#eng:hover,#eng:focus{opacity:.55}
+/* personnages animés et dialogues en bulles */
+#stage img.sp{animation:entre .6s ease-out both,respire 4.5s ease-in-out .6s infinite}
+#stage img.sp.sg{--d:-26px}#stage img.sp.sd{--d:26px}
+@keyframes entre{from{opacity:0;margin-left:var(--d,0)}to{opacity:1;margin-left:0}}
+@keyframes respire{0%,100%{margin-bottom:0}50%{margin-bottom:5px}}
+@keyframes saute{0%,100%{margin-bottom:0}40%{margin-bottom:14px}}
+#stage img.sp.tait{filter:brightness(.7);opacity:.88;animation:none}
+#stage img.sp.parle{animation:saute .45s ease-out}
+body.dys #stage img.sp{animation:entre .6s ease-out both}
+#wrap.script #left{position:sticky;top:44px;z-index:4}#wrap.script #stage{max-width:calc(34vh*1.7778);box-shadow:0 3px 8px #0003}
+@media (prefers-reduced-motion:reduce){#stage img.sp,#stage img.sp.parle,.ap{animation:none!important}}
+.ap{animation:monte .4s ease-out both}
+@keyframes monte{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.dlg{display:flex;gap:10px;align-items:flex-end;margin:14px 0}.dlg.dr{flex-direction:row-reverse}
+.av{flex:none;width:78px;height:78px;border-radius:50%;background:#e9dcc0;border:3px solid var(--acc);overflow:hidden;position:relative}
+.av img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;position:static!important}
+.av img.sp{height:210%!important}
+.bulle{position:relative;background:#fff;border:2px solid #d9c9a3;border-radius:16px;padding:10px 14px;flex:1;line-height:1.6;min-width:0}
+.dlg.dg .bulle{border-bottom-left-radius:4px}.dlg.dr .bulle{border-bottom-right-radius:4px}
+.bulle .nom{display:block;font:700 .75rem Arial,sans-serif;color:var(--acc);margin-bottom:3px;letter-spacing:.04em;text-transform:uppercase}
+.narr{margin:12px 0;line-height:1.65}.barre{margin-top:8px}
 @media (max-height:520px){.gw-tw{height:60px}.gw-title h1{font-size:1.6rem}.gw-top{margin-bottom:12px}.gw-fad img{height:140px}.gw-bulle{margin-bottom:12px;padding:8px 12px}.gw-form{padding:14px 18px}.gw-form input[type=tel]{font-size:1.8rem;padding:8px}.gw-form .btn{padding:10px;margin-top:8px}.gw-aide{display:none}.gw-form label{margin-bottom:6px}}
 </style></head><body><div id="app">
 <header><span class="hl"><button id="back" style="display:none" onclick="back()">← Retour</button><span id="ttl">La Petite Fadette</span></span><span class="hr"><span id="prog"></span><button onclick="menu()">Chapitres</button><button id="dysb" aria-pressed="false" onclick="dys(!save.dys)">Mode DYS</button></span></header>
 <div id="rot" onclick="this.style.display='none'">📱 Pour plus de confort, tourne ton téléphone en mode paysage (touche ici pour fermer). Tu peux toujours faire défiler l'écran.</div>
 <div id="wrap" class="read"><section id="left"><div id="stage"></div><div id="txt"></div></section><main id="right"><div id="panel"></div></main></div>
-<footer id="pied"><span><span id="ver">Version du 01/11, 08 h</span> <span id="cpt"></span></span><button id="eng" aria-label="Espace enseignante" onclick="window.VCT_PROF_OUVRIR&&VCT_PROF_OUVRIR()">⚙</button></footer></div>
-<script src="data/episodes.js"></script><script src="data/episodes_2_3.js?v=20261031b"></script><script src="data/episode_4.js?v=20261031a"></script><script src="data/episode_5.js?v=20261031a"></script><script src="js/compte.js?v=20261030a"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
+<footer id="pied"><span><span id="ver">Version du 01/11, 18 h</span> <span id="cpt"></span></span><button id="eng" aria-label="Espace enseignante" onclick="window.VCT_PROF_OUVRIR&&VCT_PROF_OUVRIR()">⚙</button></footer></div>
+<script src="data/episodes.js"></script><script src="data/episodes_2_3.js?v=20261101b"></script><script src="data/episode_4.js?v=20261031a"></script><script src="data/episode_5.js?v=20261101b"></script><script src="data/voix.js?v=20261101a"></script><script src="js/compte.js?v=20261030a"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
 <script>
 const $=s=>document.querySelector(s),P=$('#panel'),S=$('#stage'),T=$('#txt'),W=$('#wrap');
 let KEY='vct_save_v1';let save=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}})();
@@ -101,7 +122,7 @@ function drawStage(sc){S.innerHTML='';S.style.backgroundImage='';const on=sc&&(s
  if(sc.decor){const d=img(sc.decor,'full','decors');S.appendChild(d)}
  if(sc.album){S.appendChild(img(sc.album,'full','album'));return}
  const W=S.clientWidth,H=S.clientHeight,ppc=H*.8/172;
- (sc.sprites||[]).forEach(s=>{const m=(window.SPRITES_META||{})[s.img],i=img(s.img,'sp');let h,w,bot,cx;
+ (sc.sprites||[]).forEach(s=>{const m=(window.SPRITES_META||{})[s.img],i=img(s.img,'sp');i.dataset.p=persoOf(s.img);i.classList.add(s.side==='right'?'sd':'sg');let h,w,bot,cx;
   if(m){const k=m.cm_per_px*ppc;h=m.canvas[1]*k;w=m.canvas[0]*k;bot=-(m.canvas[1]-m.foot_y)*k;cx=m.center_x*k}else{h=H*.8;w=h*.67;bot=0;cx=w/2}
   if(s.flip){cx=w-cx;i.style.transform='scaleX(-1)'}
   const X=(s.x!=null?s.x:s.side==='right'?76:s.side==='center'?50:24)/100*W;
@@ -126,16 +147,35 @@ function menu(){cur=null;ep=null;drawStage(null);W.className='read';T.innerHTML=
  P.appendChild(btn('← Accueil',home,1));if(window.VCT_COMPTE&&!window.VCT_ESSAI_ON)P.appendChild(btn("Changer d'élève",VCT_COMPTE.changer,1))}
 function back(){if(ep&&si>0){si--;go()}else menu()}
 function start(e,pos){if(window.VCT_ESSAI_ON&&window.VCT_ABREGER&&!e.seul){e=VCT_ABREGER(e);pos=0}ep=e;si=pos||0;if(!ep.seul){save.jet=save.jet||{};if(pos===0&&!(save.done&&save.done[ep.id])){if(window.VCT_RAZ)VCT_RAZ('jet:'+ep.id);save.jet[ep.id]=0}}go()}
-function go(){const sc=ep.scenes[si];if(!sc)return bilan();cur=sc;
+function go(){if(window.__sk){document.removeEventListener('keydown',window.__sk);window.__sk=null}const sc=ep.scenes[si];if(!sc)return bilan();cur=sc;
  if(!ep.seul){save.pos=save.pos||{};save.pos[ep.id]=Math.max(save.pos[ep.id]||0,si);store()}
- $('#prog').textContent=`${si+1} / ${ep.scenes.length}`+(ep.tuto?' · tuto':'');$('#back').style.display=(!ep.seul&&si>0)?'':'none';const q=isQ(sc);W.className=q?'quiz':'read';drawStage(q?vis(sc):sc);P.innerHTML='';T.innerHTML='';window.scrollTo(0,0);
+ $('#prog').textContent=`${si+1} / ${ep.scenes.length}`+(ep.tuto?' · tuto':'');$('#back').style.display=(!ep.seul&&si>0)?'':'none';const q=isQ(sc);const vx=!q&&sc.type==='texte'&&!sc.savoir&&window.VOIX&&(VOIX[ep.id]||{})[sc.ref];W.className=(q?'quiz':'read')+(vx?' script':'');drawStage(q?vis(sc):sc);P.innerHTML='';T.innerHTML='';window.scrollTo(0,0);
  ({resume:rResume,texte:rTexte,album:rAlbum,defaite:rDefaite,info:rInfo}[sc.type]||rQ)(sc)}
 const next=()=>{si++;go()};
 const box=x=>`<div class="extrait"><small>${x.src}</small>${fmt(x.t)}</div>`;
 function rResume(sc){P.innerHTML=`<p class="rsm">${sc.t}</p>`;P.appendChild(btn('Continuer',next))}
 const SAVOIR=`<div class="savoir"><h3>Bon à savoir : comment lire un extrait</h3>Dans un livre, tout n'est pas écrit par l'auteur. Le titre, le nom de l'auteur, les notes, les résumés, les illustrations forment le <b>paratexte</b> : ce qui entoure le texte sans en faire partie.<ul><li>Le texte de George Sand est écrit en caractères <b>droits</b>.</li><li>Un <b>résumé</b> est écrit en <i>italique</i> (caractères penchés). Il raconte ce qu'on a sauté, mais il n'est pas de l'auteur.</li><li><b>[...]</b> montre qu'une partie du texte a été coupée.</li><li>Un mot <span class="mot" data-d="Touche un mot souligné : sa note apparaît.">souligné en pointillés</span> a une note : touche-le.</li></ul></div>`;
 function rInfo(sc){P.innerHTML=sc.t;P.appendChild(btn(ep.scenes[si+1]&&ep.scenes[si+1].type==='info'?'Suite':'Commencer la lecture',next))}
-function rTexte(sc){const n=ep.scenes[si+1];P.innerHTML=(sc.savoir?SAVOIR:'')+box(ep.extraits[sc.ref]);P.appendChild(btn(n&&isQ(n)?"J'ai lu : aux questions":'Continuer',next))}
+const NOMS={landry:'Landry',sylvinet:'Sylvinet',pere_barbeau:'Le père Barbeau',mere_barbeau:'La mère Barbeau',pere_caillaud:'Le père Caillaud',cadet_caillaud:'Cadet Caillaud',fadette:'La petite Fadette',sauteriot:'Sauteriot',mere_fadet:'La mère Fadet',mere_sagette:'La sagette',madelon:'Madelon',nanette:'Nanette',mercier:'Le mercier',solange:'Solange'};
+function imgs(c,cls,to){let i=0;(function essai(){if(i>=c.length)return;const d=c[i];let k=0;const im=new Image();im.className=(cls||'')+(d[2]?' '+d[2]:'');im.onload=()=>to.appendChild(im);im.onerror=()=>{if(++k<EXT.length)im.src=`assets/${d[0]}/${d[1]}.${EXT[k]}`;else{i++;essai()}};im.src=`assets/${d[0]}/${d[1]}.${EXT[0]}`})()}
+function decoupe(t){const out=[];let r=t.trim(),m;while((m=r.match(/^\{\{([\s\S]+?)\}\}/))){out.push({k:'r',t:m[1]});r=r.slice(m[0].length)}
+ const fin=[];while((m=r.match(/\{\{([\s\S]+?)\}\}\s*$/))){fin.unshift({k:'r',t:m[1]});r=r.slice(0,r.length-m[0].length)}
+ r.split('<br><br>').forEach(p=>{p=p.trim();if(p)out.push({k:/^–/.test(p)?'d':'n',t:p})});return out.concat(fin)}
+function parle(p){[].forEach.call(S.querySelectorAll('img.sp'),i=>{i.classList.remove('parle');i.classList.toggle('tait',!!p&&i.dataset.p!==p);if(p&&i.dataset.p===p){void i.offsetWidth;i.classList.add('parle')}})}
+function rScript(sc,x,v,n){const L=decoupe(x.t),box=el('<small>'+x.src+'</small>','extrait scene'),bar=el('','barre'),sp=sc.sprites||[],fin=btn(n&&isQ(n)?"J'ai lu : aux questions":'Continuer',next);let k=0,nd=0;
+ P.innerHTML='';P.appendChild(box);
+ function ligne(it){let r;
+  if(it.k==='r'){r=el(fmt('{{'+it.t+'}}'),'ap');parle(null)}
+  else if(it.k==='n'){r=el(fmt(it.t),'narr ap');parle(null)}
+  else{const key=v[nd++]||'';let pe=key.split(':')[0],ex=key.split(':')[1],base=null;if(pe.indexOf('@')>0){base=pe.split('@')[1];pe=pe.split('@')[0]}
+   const s=sp.find(q=>persoOf(q.img)===pe);base=base||(s&&s.img);r=el('','dlg ap '+(s&&s.side==='right'?'dr':'dg'));
+   const av=el('','av');if(pe&&base&&ex)imgs([[`portraits/${pe}`,`${base}_${ex}`],[`sprites/${pe}`,base,'sp']],'',av);else if(pe&&base)imgs([[`sprites/${pe}`,base,'sp']],'',av);
+   r.appendChild(av);r.appendChild(el((NOMS[pe]?'<b class="nom">'+NOMS[pe]+'</b>':'')+fmt(it.t),'bulle'));parle(pe)}
+  return r}
+ function suite(){if(k>=L.length)return;box.appendChild(ligne(L[k++]));if(k>=L.length){bar.innerHTML='';bar.appendChild(fin)}if(bar.scrollIntoView)bar.scrollIntoView({behavior:'smooth',block:'nearest'})}
+ bar.appendChild(btn('Suite ▸',suite));bar.appendChild(btn('Tout afficher',()=>{while(k<L.length)suite()},1));P.appendChild(bar);suite();
+ window.__sk=e=>{if((e.key==='Enter'||e.key===' ')&&k<L.length&&!(e.target.closest&&e.target.closest('button,input'))){e.preventDefault();suite()}};document.addEventListener('keydown',window.__sk)}
+function rTexte(sc){const n=ep.scenes[si+1],v=(window.VOIX&&VOIX[ep.id]||{})[sc.ref];if(v&&!sc.savoir)return rScript(sc,ep.extraits[sc.ref],v,n);P.innerHTML=(sc.savoir?SAVOIR:'')+box(ep.extraits[sc.ref]);P.appendChild(btn(n&&isQ(n)?"J'ai lu : aux questions":'Continuer',next))}
 function rAlbum(sc){const x=sc.ref?ep.extraits[sc.ref]:sc;P.innerHTML=`<div class="extrait cap"><small>${x.src}</small>${fmt(x.t)}</div>`;P.appendChild(btn('Continuer',next))}
 /* ---------- fin perdue : image + texte du jeu, puis reprise au dernier texte lu ---------- */
 function rDefaite(sc){const d=DEFAITES[sc.id];S.innerHTML='';S.className='on';S.appendChild(img(d.img,'full','defaites'));
