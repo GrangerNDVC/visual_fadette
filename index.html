@@ -98,7 +98,7 @@ body.dys #stage img.sp{animation:entre .6s ease-out both}
 <header><span class="hl"><button id="back" style="display:none" onclick="back()">← Retour</button><span id="ttl">La Petite Fadette</span></span><span class="hr"><span id="prog"></span><button onclick="menu()">Chapitres</button><button id="dysb" aria-pressed="false" onclick="dys(!save.dys)">Mode DYS</button></span></header>
 <div id="rot" onclick="this.style.display='none'">📱 Pour plus de confort, tourne ton téléphone en mode paysage (touche ici pour fermer). Tu peux toujours faire défiler l'écran.</div>
 <div id="wrap" class="read"><section id="left"><div id="stage"></div><div id="txt"></div></section><main id="right"><div id="panel"></div></main></div>
-<footer id="pied"><span><span id="ver">Version du 01/11, 18 h</span> <span id="cpt"></span></span><button id="eng" aria-label="Espace enseignante" onclick="window.VCT_PROF_OUVRIR&&VCT_PROF_OUVRIR()">⚙</button></footer></div>
+<footer id="pied"><span><span id="ver">Version du 04/11, 06 h</span> <span id="cpt"></span></span><button id="eng" aria-label="Espace enseignante" onclick="window.VCT_PROF_OUVRIR&&VCT_PROF_OUVRIR()">⚙</button></footer></div>
 <script src="data/episodes.js"></script><script src="data/episodes_2_3.js?v=20261101b"></script><script src="data/episode_4.js?v=20261031a"></script><script src="data/episode_5.js?v=20261101b"></script><script src="data/voix.js?v=20261101a"></script><script src="js/compte.js?v=20261030a"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
 <script>
 const $=s=>document.querySelector(s),P=$('#panel'),S=$('#stage'),T=$('#txt'),W=$('#wrap');
@@ -111,12 +111,19 @@ const TAUNT=["Tu veux un coup de main ? Bon… écoute bien.","Encore perdu ? Al
 const MAXJ=3,EXT=['png','jpg','jpeg','jfif','webp'];
 const MULTI=['cadet_caillaud','pere_barbeau','mere_barbeau','mere_fadet','mere_sagette','pere_caillaud'];
 const persoOf=b=>MULTI.find(m=>b.startsWith(m))||b.split('_')[0];
-function img(base,cls,folder){const i=new Image();let k=0;i.className=cls||'';const t=()=>{i.src=`assets/${folder||'sprites/'+persoOf(base)}/${base}.${EXT[k++]}`};i.onerror=()=>{if(k<EXT.length)t();else i.remove()};t();return i}
+const OKEXT={};
+function img(base,cls,folder){const i=new Image(),f=folder||'sprites/'+persoOf(base),key=f+'/'+base,L=OKEXT[key]?[OKEXT[key]]:(/^(decors|album|defaites|ui|cg)/.test(f)?['jpg','png','jpeg','jfif','webp']:EXT);let k=0;i.className=cls||'';const t=()=>{i.src=`assets/${f}/${base}.${L[k++]}`};i.onload=()=>{OKEXT[key]=L[k-1]};i.onerror=()=>{if(k<L.length)t();else i.remove()};t();return i}
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const el=(h,c)=>{const d=document.createElement('div');if(c)d.className=c;d.innerHTML=h||'';return d};
 function btn(txt,fn,alt){const b=document.createElement('button');b.className='btn'+(alt?' alt':'');b.textContent=txt;b.onclick=fn;return b}
 let ep,si,cur;
 /* ---------- décor et sprites à l'échelle (sprites_meta : adulte de 172 cm = 80 % de la hauteur) ---------- */
+function mesureImg(i){try{const c=document.createElement('canvas');c.width=i.naturalWidth;c.height=i.naturalHeight;const g=c.getContext('2d');g.drawImage(i,0,0);const d=g.getImageData(0,0,c.width,c.height).data,w=c.width,h=c.height;let top=-1,foot=-1,mn=w,mx=0;for(let y=0;y<h;y++){let n=0,a=w,b=-1;for(let x=0;x<w;x++)if(d[(y*w+x)*4+3]>128){n++;if(x<a)a=x;if(x>b)b=x}if(n>=12){if(top<0)top=y;foot=y;if(a<mn)mn=a;if(b>mx)mx=b}}return top<0?null:{top:top,foot:foot,cx:(mn+mx)/2}}catch(e){return null}}
+function ajusteSprite(i,m,ppc,H,X,s){i.addEventListener('load',()=>{const nw=i.naturalWidth,nh=i.naturalHeight;if(!nw||!nh)return;let k,foot,cx,h,w;
+ if(!m){h=H*.8;w=h*nw/nh;i.style.width=w+'px';i.style.left=(X-w/2)+'px';return}
+ if(Math.abs(nw/nh-m.canvas[0]/m.canvas[1])<.01)return;
+ const r=mesureImg(i);if(r&&m.real_height_cm){k=m.real_height_cm/(r.foot-r.top+1)*ppc;foot=r.foot;cx=r.cx}else{const q=nh/m.canvas[1];k=m.cm_per_px*ppc/q;foot=m.foot_y*q;cx=m.center_x/m.canvas[0]*nw}
+ h=nh*k;w=nw*k;if(s.flip)cx=nw-cx;i.style.height=h+'px';i.style.width=w+'px';i.style.left=(X-cx*k)+'px';i.style.bottom=(-(nh-foot)*k+H*.03)+'px'})}
 function drawStage(sc){S.innerHTML='';S.style.backgroundImage='';const on=sc&&(sc.sprites||sc.decor||sc.album||sc.ui);S.className=on?'on':'';if(on)S.style.height=Math.round(S.clientWidth*.5625)+'px';if(!on)return;
  if(sc.ui){S.appendChild(img(sc.ui,'full','ui'));return}
  if(sc.decor){const d=img(sc.decor,'full','decors');S.appendChild(d)}
@@ -126,7 +133,7 @@ function drawStage(sc){S.innerHTML='';S.style.backgroundImage='';const on=sc&&(s
   if(m){const k=m.cm_per_px*ppc;h=m.canvas[1]*k;w=m.canvas[0]*k;bot=-(m.canvas[1]-m.foot_y)*k;cx=m.center_x*k}else{h=H*.8;w=h*.67;bot=0;cx=w/2}
   if(s.flip){cx=w-cx;i.style.transform='scaleX(-1)'}
   const X=(s.x!=null?s.x:s.side==='right'?76:s.side==='center'?50:24)/100*W;
-  i.style.cssText+=`;height:${h}px;width:${w}px;left:${X-cx}px;bottom:${bot+H*.03}px`;S.appendChild(i)})}
+  i.style.cssText+=`;height:${h}px;width:${w}px;left:${X-cx}px;bottom:${bot+H*.03}px`;ajusteSprite(i,m,ppc,H,X,s);S.appendChild(i)})}
 const isQ=sc=>['resume','texte','album','defaite','info'].indexOf(sc.type)<0;
 function vis(sc){if(sc.decor||sc.sprites||sc.album)return sc;for(let k=si-1;k>=0;k--){const x=ep.scenes[k];if(x.ref===sc.ref&&(x.decor||x.sprites||x.album||x.ui))return x}return null}
 const redraw=()=>{if(cur&&ep)drawStage(isQ(cur)?vis(cur):cur);else{const a=$('#accueil');if(a)a.style.height=Math.round(a.clientWidth*.5625)+'px'}};
