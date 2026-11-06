@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orienter les personnages — La Petite Fadette</title>
+<style>body{font:16px/1.5 Arial,sans-serif;background:#f4ead8;color:#2b2118;margin:0;padding:18px}
+h1{font:700 1.5rem Georgia,serif;color:#8a4b2a;margin:0 0 6px}.bloc{background:#fffaf0;border:2px solid #e0d2ae;border-radius:10px;padding:12px 16px;margin:10px 0;max-width:900px}
+#grille{display:flex;flex-wrap:wrap;gap:12px}.c{background:#fffaf0;border:2px solid #e0d2ae;border-radius:10px;padding:8px;width:210px;text-align:center}
+.c img{height:200px;max-width:100%;object-fit:contain;display:block;margin:0 auto 6px;background:repeating-conic-gradient(#efe4cb 0 25%,#fffaf0 0 50%) 0 0/16px 16px}
+.c b{display:block;font-size:.8rem;word-break:break-all;margin-bottom:6px}.c button{font:inherit;font-size:.85rem;padding:6px 8px;border-radius:7px;border:2px solid #8a4b2a;background:#fff;color:#8a4b2a;cursor:pointer;margin:2px 0;width:100%}
+.c button.on{background:#8a4b2a;color:#fff}button.gros{font:inherit;padding:10px 16px;border-radius:8px;border:0;background:#8a4b2a;color:#fff;cursor:pointer;margin:6px 6px 6px 0}.ko{color:#b3402f}.ok{color:#2e7d32}</style></head><body>
+<h1>Orienter les personnages</h1>
+<div class="bloc">Pour chaque personnage en pied, indique <b>vers où il regarde dans l'image</b> : à gauche, à droite, ou de face. Le jeu pourra alors les retourner tout seul pour qu'ils se fassent face. Tes choix sont gardés dans ce navigateur : tu peux t'arrêter et reprendre.<br>
+<button class="gros" id="dl">Télécharger orientation.js</button><button class="gros" id="cp">Copier le texte</button> <span id="etat"></span>
+<p style="margin:6px 0 0">Ensuite, dépose le fichier téléchargé dans le dossier <code>data</code> de ton dépôt (il remplace l'ancien <code>orientation.js</code>).</p></div>
+<div id="grille"></div>
+<script src="data/orientation.js"></script>
+<script>
+var LISTE=["assets/sprites/cheval/cheval_pie.png", "assets/sprites/fadette/fadette_14_guenilles.png", "assets/sprites/landry/landry_14_priche.png", "assets/sprites/landry/landry_15_fete.png", "assets/sprites/landry/landry_18_face.png", "assets/sprites/landry/landry_18_travail.png", "assets/sprites/landry/landry_19_noces.png", "assets/sprites/landry/landry_8_enfance.png", "assets/sprites/madelon/madelon_16_bergere.png", "assets/sprites/madelon/madelon_16_fete.png", "assets/sprites/mercier/mercier_adulte.png", "assets/sprites/mere_barbeau/mere_barbeau_50.png", "assets/sprites/mere_fadet/mere_fadet_70.png", "assets/sprites/mere_sagette/mere_sagette_70.png", "assets/sprites/nanette/nanette_10.png", "assets/sprites/nanette/nanette_16.png", "assets/sprites/pere_barbeau/pere_barbeau_55.png", "assets/sprites/pere_caillaud/pere_caillaud_55.png", "assets/sprites/sauteriot/sauteriot_10_curieux.png", "assets/sprites/sauteriot/sauteriot_10_hostile.png", "assets/sprites/sauteriot/sauteriot_12_allie.png", "assets/sprites/sauteriot/sauteriot_15_instruit.png", "assets/sprites/sylvinet/sylvinet_14_triste.png", "assets/sprites/sylvinet/sylvinet_15_jaloux.png", "assets/sprites/sylvinet/sylvinet_18_convalescent.png", "assets/sprites/sylvinet/sylvinet_18_fievre.png", "assets/sprites/sylvinet/sylvinet_20_soldat.png", "assets/sprites/sylvinet/sylvinet_27_capitaine.png", "assets/sprites/sylvinet/sylvinet_8_enfance.png"];
+var cle='vct_orientation',ch={};
+try{ch=JSON.parse(localStorage.getItem(cle)||'{}')}catch(e){}
+for(var k in (window.FACE||{}))if(!ch[k])ch[k]=window.FACE[k];
+function nom(p){return p.split('/').pop().replace(/\.[^.]+$/,'')}
+function sauve(){try{localStorage.setItem(cle,JSON.stringify(ch))}catch(e){}}
+function texte(){var o={},ks=Object.keys(ch).sort();ks.forEach(function(k){o[k]=ch[k]});
+  return "/* Orientation des personnages en pied : 'g' = regarde vers la gauche de l'image, 'd' = vers la droite, 'f' = de face. */\nwindow.FACE="+JSON.stringify(o,null,1)+";\n"}
+function maj(){var n=Object.keys(ch).length;document.getElementById('etat').innerHTML=n+' / '+LISTE.length+' choisis'+(n===LISTE.length?' <span class="ok">✓ tout est fait</span>':'');
+  [].forEach.call(document.querySelectorAll('.c'),function(c){var v=ch[c.getAttribute('data-n')];[].forEach.call(c.querySelectorAll('button'),function(b){b.classList.toggle('on',b.getAttribute('data-v')===v)})})}
+LISTE.forEach(function(p){var n=nom(p),c=document.createElement('div');c.className='c';c.setAttribute('data-n',n);
+  c.innerHTML='<img src="'+p+'" alt="'+n+'"><b>'+n+'</b><button data-v="g">← regarde à gauche</button><button data-v="f">de face</button><button data-v="d">regarde à droite →</button>';
+  [].forEach.call(c.querySelectorAll('button'),function(b){b.onclick=function(){ch[n]=b.getAttribute('data-v');sauve();maj()}});
+  document.getElementById('grille').appendChild(c)});
+document.getElementById('dl').onclick=function(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([texte()],{type:'text/javascript'}));a.download='orientation.js';document.body.appendChild(a);a.click();a.remove()};
+document.getElementById('cp').onclick=function(){var t=texte();if(navigator.clipboard)navigator.clipboard.writeText(t);else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}this.textContent='Copié ✓'};
+maj();
+</script></body></html>

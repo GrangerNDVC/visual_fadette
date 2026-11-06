@@ -73,13 +73,12 @@ body.gate .hr,body.gate #back,body.gate #ttl{display:none!important}
 #pied{display:flex;justify-content:space-between;align-items:center;padding:6px 14px;font:.72rem Arial,sans-serif;color:#7a6a58}
 #eng{background:none;border:0;color:#2b2118;opacity:.12;font-size:15px;padding:4px 8px;cursor:pointer}#eng:hover,#eng:focus{opacity:.55}
 /* personnages animés et dialogues en bulles */
-#stage img.sp{animation:entre .6s ease-out both,respire 4.5s ease-in-out .6s infinite}
+#stage img.sp{animation:entre .6s ease-out both}
 #stage img.sp.sg{--d:-26px}#stage img.sp.sd{--d:26px}
 @keyframes entre{from{opacity:0;margin-left:var(--d,0)}to{opacity:1;margin-left:0}}
-@keyframes respire{0%,100%{margin-bottom:0}50%{margin-bottom:5px}}
-@keyframes saute{0%,100%{margin-bottom:0}40%{margin-bottom:14px}}
-#stage img.sp.tait{filter:brightness(.7);opacity:.88;animation:none}
-#stage img.sp.parle{animation:saute .45s ease-out}
+#stage img.sp.tait{filter:brightness(.72);opacity:.9;animation:none}
+#stage img.sp.parle{filter:brightness(1.04)}
+#panel .verrou{opacity:.55}
 body.dys #stage img.sp{animation:entre .6s ease-out both}
 #wrap.script #left{position:sticky;top:44px;z-index:4}#wrap.script #stage{max-width:calc(34vh*1.7778);box-shadow:0 3px 8px #0003}
 @media (prefers-reduced-motion:reduce){#stage img.sp,#stage img.sp.parle,.ap{animation:none!important}}
@@ -98,8 +97,8 @@ body.dys #stage img.sp{animation:entre .6s ease-out both}
 <header><span class="hl"><button id="back" style="display:none" onclick="back()">← Retour</button><span id="ttl">La Petite Fadette</span></span><span class="hr"><span id="prog"></span><button onclick="menu()">Chapitres</button><button id="dysb" aria-pressed="false" onclick="dys(!save.dys)">Mode DYS</button></span></header>
 <div id="rot" onclick="this.style.display='none'">📱 Pour plus de confort, tourne ton téléphone en mode paysage (touche ici pour fermer). Tu peux toujours faire défiler l'écran.</div>
 <div id="wrap" class="read"><section id="left"><div id="stage"></div><div id="txt"></div></section><main id="right"><div id="panel"></div></main></div>
-<footer id="pied"><span><span id="ver">Version du 04/11, 06 h</span> <span id="cpt"></span></span><button id="eng" aria-label="Espace enseignante" onclick="window.VCT_PROF_OUVRIR&&VCT_PROF_OUVRIR()">⚙</button></footer></div>
-<script src="data/episodes.js"></script><script src="data/episodes_2_3.js?v=20261101b"></script><script src="data/episode_4.js?v=20261031a"></script><script src="data/episode_5.js?v=20261101b"></script><script src="data/voix.js?v=20261101a"></script><script src="js/compte.js?v=20261030a"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
+<footer id="pied"><span><span id="ver">Version du 06/11, 12 h</span> <span id="cpt"></span></span><button id="eng" aria-label="Espace enseignante" onclick="window.VCT_PROF_OUVRIR&&VCT_PROF_OUVRIR()">⚙</button></footer></div>
+<script src="data/episodes.js"></script><script src="data/episodes_2_3.js?v=20261101b"></script><script src="data/episode_4.js?v=20261031a"></script><script src="data/episode_5.js?v=20261101b"></script><script src="data/voix.js?v=20261101a"></script><script src="data/orientation.js?v=20261104a"></script><script src="js/compte.js?v=20261030a"></script><script>if(/[?&]test=1/.test(location.search))document.write('<script src="data/episode_test.js"><\/script>')</script><script src="data/defaites.js"></script><script src="assets/sprites_meta.js"></script>
 <script>
 const $=s=>document.querySelector(s),P=$('#panel'),S=$('#stage'),T=$('#txt'),W=$('#wrap');
 let KEY='vct_save_v1';let save=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}})();
@@ -119,21 +118,22 @@ function btn(txt,fn,alt){const b=document.createElement('button');b.className='b
 let ep,si,cur;
 /* ---------- décor et sprites à l'échelle (sprites_meta : adulte de 172 cm = 80 % de la hauteur) ---------- */
 function mesureImg(i){try{const c=document.createElement('canvas');c.width=i.naturalWidth;c.height=i.naturalHeight;const g=c.getContext('2d');g.drawImage(i,0,0);const d=g.getImageData(0,0,c.width,c.height).data,w=c.width,h=c.height;let top=-1,foot=-1,mn=w,mx=0;for(let y=0;y<h;y++){let n=0,a=w,b=-1;for(let x=0;x<w;x++)if(d[(y*w+x)*4+3]>128){n++;if(x<a)a=x;if(x>b)b=x}if(n>=12){if(top<0)top=y;foot=y;if(a<mn)mn=a;if(b>mx)mx=b}}return top<0?null:{top:top,foot:foot,cx:(mn+mx)/2}}catch(e){return null}}
-function ajusteSprite(i,m,ppc,H,X,s){i.addEventListener('load',()=>{const nw=i.naturalWidth,nh=i.naturalHeight;if(!nw||!nh)return;let k,foot,cx,h,w;
- if(!m){h=H*.8;w=h*nw/nh;i.style.width=w+'px';i.style.left=(X-w/2)+'px';return}
+function ajusteSprite(i,m,ppc,H,X,flip,dy,f){ppc=ppc*f;i.addEventListener('load',()=>{const nw=i.naturalWidth,nh=i.naturalHeight;if(!nw||!nh)return;let k,foot,cx,h,w;
+ if(!m){h=H*.8*f;w=h*nw/nh;i.style.width=w+'px';i.style.left=(X-w/2)+'px';return}
  if(Math.abs(nw/nh-m.canvas[0]/m.canvas[1])<.01)return;
  const r=mesureImg(i);if(r&&m.real_height_cm){k=m.real_height_cm/(r.foot-r.top+1)*ppc;foot=r.foot;cx=r.cx}else{const q=nh/m.canvas[1];k=m.cm_per_px*ppc/q;foot=m.foot_y*q;cx=m.center_x/m.canvas[0]*nw}
- h=nh*k;w=nw*k;if(s.flip)cx=nw-cx;i.style.height=h+'px';i.style.width=w+'px';i.style.left=(X-cx*k)+'px';i.style.bottom=(-(nh-foot)*k+H*.03)+'px'})}
+ h=nh*k;w=nw*k;if(flip)cx=nw-cx;i.style.height=h+'px';i.style.width=w+'px';i.style.left=(X-cx*k)+'px';i.style.bottom=(-(nh-foot)*k+H*.03+dy)+'px'})}
 function drawStage(sc){S.innerHTML='';S.style.backgroundImage='';const on=sc&&(sc.sprites||sc.decor||sc.album||sc.ui);S.className=on?'on':'';if(on)S.style.height=Math.round(S.clientWidth*.5625)+'px';if(!on)return;
  if(sc.ui){S.appendChild(img(sc.ui,'full','ui'));return}
  if(sc.decor){const d=img(sc.decor,'full','decors');S.appendChild(d)}
  if(sc.album){S.appendChild(img(sc.album,'full','album'));return}
  const W=S.clientWidth,H=S.clientHeight,ppc=H*.8/172;
- (sc.sprites||[]).forEach(s=>{const m=(window.SPRITES_META||{})[s.img],i=img(s.img,'sp');i.dataset.p=persoOf(s.img);i.classList.add(s.side==='right'?'sd':'sg');let h,w,bot,cx;
-  if(m){const k=m.cm_per_px*ppc;h=m.canvas[1]*k;w=m.canvas[0]*k;bot=-(m.canvas[1]-m.foot_y)*k;cx=m.center_x*k}else{h=H*.8;w=h*.67;bot=0;cx=w/2}
-  if(s.flip){cx=w-cx;i.style.transform='scaleX(-1)'}
+ (sc.sprites||[]).forEach((s,idx,all)=>{const m=(window.SPRITES_META||{})[s.img],i=img(s.img,'sp');i.dataset.p=persoOf(s.img);i.classList.add(s.side==='right'?'sd':'sg');let h,w,bot,cx;
+  const side=s.side||'left',nat=(window.FACE||{})[s.img],want=side==='left'?'d':side==='right'?'g':null,flip=s.flip!=null?!!s.flip:!!(nat&&want&&nat!==want),arr=s.plan!=null?!!s.plan:(all.length>1&&(side==='center'||(all.length===2&&idx===1))),f=arr?.9:1,dy=arr?H*.035:0;
+  if(m){const k=m.cm_per_px*ppc*f;h=m.canvas[1]*k;w=m.canvas[0]*k;bot=-(m.canvas[1]-m.foot_y)*k;cx=m.center_x*k}else{h=H*.8*f;w=h*.67;bot=0;cx=w/2}
+  if(flip){cx=w-cx;i.style.transform='scaleX(-1)'}
   const X=(s.x!=null?s.x:s.side==='right'?76:s.side==='center'?50:24)/100*W;
-  i.style.cssText+=`;height:${h}px;width:${w}px;left:${X-cx}px;bottom:${bot+H*.03}px`;ajusteSprite(i,m,ppc,H,X,s);S.appendChild(i)})}
+  i.style.cssText+=`;height:${h}px;width:${w}px;left:${X-cx}px;bottom:${bot+H*.03+dy}px;z-index:${arr?1:2}`;ajusteSprite(i,m,ppc,H,X,flip,dy,f);S.appendChild(i)})}
 const isQ=sc=>['resume','texte','album','defaite','info'].indexOf(sc.type)<0;
 function vis(sc){if(sc.decor||sc.sprites||sc.album)return sc;for(let k=si-1;k>=0;k--){const x=ep.scenes[k];if(x.ref===sc.ref&&(x.decor||x.sprites||x.album||x.ui))return x}return null}
 const redraw=()=>{if(cur&&ep)drawStage(isQ(cur)?vis(cur):cur);else{const a=$('#accueil');if(a)a.style.height=Math.round(a.clientWidth*.5625)+'px'}};
@@ -148,12 +148,14 @@ function home(){cur=null;$('#back').style.display='none';drawStage(null);W.class
  const L=el(''),cur1=EPISODES.find(e=>!(save.done&&save.done[e.id]))||EPISODES[EPISODES.length-1],p1=(save.pos||{})[cur1.id]||0;
  L.appendChild(btn(p1?'Continuer l\'histoire':'Commencer',()=>start(cur1,p1)));L.appendChild(btn('Choisir un chapitre',menu,1));if(window.VCT_COMPTE&&!window.VCT_ESSAI_ON)L.appendChild(btn("Changer d'élève",VCT_COMPTE.changer,1));
  const v=Object.keys(save.def||{}).length;if(v)L.appendChild(el(`<p><small>Fins perdues découvertes : ${v} / ${Object.keys(DEFAITES).length}</small></p>`));P.appendChild(L)}
+function debloque(e){if(window.VCT_ESSAI_ON||e.id==='test')return true;const L=EPISODES.filter(x=>x.id!=='test'),i=L.indexOf(e);return i<=0||!!(save.done&&save.done[L[i-1].id])}
 function menu(){cur=null;ep=null;drawStage(null);W.className='read';T.innerHTML='';$('#back').style.display='none';$('#prog').textContent='';P.innerHTML='<h2>Choisis un chapitre</h2>';
  EPISODES.forEach(e=>{const d=save.done&&save.done[e.id],pos=(save.pos||{})[e.id]||0,c=el(`<b>${e.titre}</b><br><small>${e.chap||''}${d?' · terminé ✓':pos?' · en cours':''}</small>`,'extrait');
+  if(!debloque(e)){c.classList.add('verrou');c.appendChild(el('<small>🔒 Termine l\'épisode précédent pour débloquer celui-ci.</small>'));P.appendChild(c);return}
   if(pos&&!d)c.appendChild(btn('Reprendre',()=>start(e,pos)));c.appendChild(btn(d?'Relire l\'histoire':'Commencer',()=>start(e,0),pos&&!d));P.appendChild(c)});
  P.appendChild(btn('← Accueil',home,1));if(window.VCT_COMPTE&&!window.VCT_ESSAI_ON)P.appendChild(btn("Changer d'élève",VCT_COMPTE.changer,1))}
 function back(){if(ep&&si>0){si--;go()}else menu()}
-function start(e,pos){if(window.VCT_ESSAI_ON&&window.VCT_ABREGER&&!e.seul){e=VCT_ABREGER(e);pos=0}ep=e;si=pos||0;if(!ep.seul){save.jet=save.jet||{};if(pos===0&&!(save.done&&save.done[ep.id])){if(window.VCT_RAZ)VCT_RAZ('jet:'+ep.id);save.jet[ep.id]=0}}go()}
+function start(e,pos){if(!debloque(e)){menu();return}if(window.VCT_ESSAI_ON&&window.VCT_ABREGER&&!e.seul){e=VCT_ABREGER(e);pos=0}ep=e;si=pos||0;if(!ep.seul){save.jet=save.jet||{};if(pos===0&&!(save.done&&save.done[ep.id])){if(window.VCT_RAZ)VCT_RAZ('jet:'+ep.id);save.jet[ep.id]=0}}go()}
 function go(){if(window.__sk){document.removeEventListener('keydown',window.__sk);window.__sk=null}const sc=ep.scenes[si];if(!sc)return bilan();cur=sc;
  if(!ep.seul){save.pos=save.pos||{};save.pos[ep.id]=Math.max(save.pos[ep.id]||0,si);store()}
  $('#prog').textContent=`${si+1} / ${ep.scenes.length}`+(ep.tuto?' · tuto':'');$('#back').style.display=(!ep.seul&&si>0)?'':'none';const q=isQ(sc);const vx=!q&&sc.type==='texte'&&!sc.savoir&&window.VOIX&&(VOIX[ep.id]||{})[sc.ref];W.className=(q?'quiz':'read')+(vx?' script':'');drawStage(q?vis(sc):sc);P.innerHTML='';T.innerHTML='';window.scrollTo(0,0);
